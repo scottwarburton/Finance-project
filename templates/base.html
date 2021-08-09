@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     {% block head %}{% endblock %}
-    <!--above block indicates where we will insert html code -->
+    <!--jinja syntax - block indicates where we will insert html code -->
 </head>
 <body>
     {% block body %}{% endblock %}

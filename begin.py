@@ -1,6 +1,7 @@
 
 
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
 begin = Flask(__name__)
 
@@ -13,11 +14,11 @@ def index():
 if __name__ == "__main__":
     begin.run(debug=True)
 
-#to run
+#to setup
 """
+source proj/bin/activate
 python3 begin.py
-url
-localhost:5000
+localhost:5000      #go to this url
 """
 
 
