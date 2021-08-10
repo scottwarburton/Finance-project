@@ -3,7 +3,6 @@
 Heroku
 https://flaskprojectsw.herokuapp.com
 
-
 Finance project - Flask, python, SQL, javascript
 Stock portfolio analyser
 
