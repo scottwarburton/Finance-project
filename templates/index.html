@@ -14,7 +14,7 @@
             <th>Added</th>
             <th>Actions</th>
         </tr>
-        {% for task in tasks % }
+        {% for task in tasks %}
             <tr>
                 <td>{{ task.content }}</td>
                 <td>{{ task.date_created.date() }}</td>
