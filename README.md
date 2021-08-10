@@ -7,7 +7,7 @@ Finance project - Flask, python, SQL, javascript
 Stock portfolio analyser
 
 Analyse
-enter ticker to analyse
+enter ticker to analyse 
 request current data from yahoo finance
 display stock statistics and matplotlib chart
 
