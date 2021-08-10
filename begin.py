@@ -1,6 +1,6 @@
 
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -18,13 +18,25 @@ class Todo(db.Model):
         return "<Task %r>" % self.id
         #when creating a task, will return Task then id of task created
 
-
-
 #setup route so don't end up with 404 when searching url
 
-@begin.route("/")
+@begin.route("/", methods=["POST", "GET"])
+
 def index():
-    return render_template("index.html")
+    if request.method == "POST":
+        task_content = request.form["content"]  #create new task from input (html id)
+        new_task = Todo(content=task_content)
+
+        try:
+            db.session.add(new_task)    #add to our database
+            db.session.commit()
+            return db.redirect("/") #then redirect back to our index page
+
+
+        #when pressing submit button
+    else:
+        return render_template("index.html")
+        #when loading page
 
 if __name__ == "__main__":
     begin.run(debug=True)
