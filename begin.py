@@ -22,6 +22,8 @@ class Todo(db.Model):
 
 @begin.route("/", methods=["POST", "GET"])
 
+@begin.route("/delete/<int:id>")    #using id from table as unique identifier for tasks
+
 def index():
     if request.method == "POST":
         task_content = request.form["content"]  #create new task from input (html id)
