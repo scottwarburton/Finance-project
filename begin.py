@@ -30,7 +30,7 @@ def index():
         try:
             db.session.add(new_task)    #add to our database
             db.session.commit()
-            return db.redirect("/") #then redirect back to our index page
+            return redirect("/") #then redirect back to our index page
         except:
             return "Error adding task"
 
@@ -48,9 +48,14 @@ def delete(id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
-        return db.redirect("/")
+        return redirect("/")
     except:
         return "Error deleting task"
+
+@begin.route("/update/<int:id>", methods=["GET", "POST"])
+def update(id):
+    return ""
+
 
 if __name__ == "__main__":
     begin.run(debug=True)
