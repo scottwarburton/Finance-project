@@ -31,11 +31,13 @@ def index():
             db.session.add(new_task)    #add to our database
             db.session.commit()
             return db.redirect("/") #then redirect back to our index page
-
+        except:
+            return "Error adding task"
 
         #when pressing submit button
     else:
-        return render_template("index.html")
+        tasks = Todo.query.order_by(Todo.date_created).all()    #ordering by newest to oldest (could do .first())
+        return render_template("index.html", tasks=tasks)   #
         #when loading page
 
 if __name__ == "__main__":
