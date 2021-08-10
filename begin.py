@@ -4,8 +4,8 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-begin = Flask(__name
-begin.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///flaskdb.db"
+begin = Flask(__name__)
+begin.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 db = SQLAlchemy(begin)
 
 class Todo(db.Model):
