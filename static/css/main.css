@@ -1,11 +1,4 @@
-body {
-    background-color: blue;
-    font-family: sans-serif;
-}
-code {
-    background-color: #f1f1f1;
-    padding: 2px;
-}
+
 nav {
     position: fixed;
     top: 0;
@@ -26,6 +19,11 @@ header {
 img {
     width: 100px;
 }
+body {
+    background-color: cyan;
+    font-family: sans-serif;
+    margin: 120px;
+}
 section {
     display: flex;
     flex-wrap: wrap;
@@ -35,6 +33,10 @@ section {
 form {
     display: flex;
     justify-content: flex-start;
+}
+code {
+    background-color: #f1f1f1;
+    padding: 2px;
 }
 @media (max-width: 100px) {
     display: flex;
