@@ -1,28 +1,27 @@
-
+body {
+    background-color: blue;
+    font-family: sans-serif;
+}
 code {
-  background-color: #f1f1f1;
-  padding: 2px;
+    background-color: #f1f1f1;
+    padding: 2px;
 }
 nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  background-color: #888;
-  width: 100px;
-  height: 100%;
-  padding-top: 20px;
-}
-main {
-  margin-left: 100px;
-  line-height: 1.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: #888;
+    width: 100px;
+    height: 100%;
+    padding-top: 20px;
 }
 header {
-  font-weight: bold;
-  font-size: 20px;
-  background-color: #CCC;
-  width: auto;
-  max-width: 800px;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #CCC;
+    width: auto;
+    max-width: 800px;
 }
 img {
     width: 100px;
@@ -42,16 +41,16 @@ form {
     justify-content: center;
 }
 .project-tile {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minimax(100px, 1fr));
-  grid-gap: 10px;
-  padding: 50px 10px;
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
-  background: #B0E0E6;
-  margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minimax(100px, 1fr));
+    grid-gap: 10px;
+    padding: 50px 10px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    background: #B0E0E6;
+    margin-bottom: 10px;
 }
 .projects {
-  background: #00F;
+    background: #00F;
 }
