@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html id="main" lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title id="title">Frontend Development Journey</title>
+  </head>
+
+  <body>
+    <header>
+        <nav id=nav-bar>
+          <a href="#h1" id="jump1" class="nav-link">Go To Start</a>
+          <a href="#main" id="jump2" class="nav-link">Go To Middle</a>
+          <a href="#footer" id="jump2" class="nav-link">Go To End</a>
+        </nav>
+      <section>
+        <h1>SW's Frontend Development Journey</h1>
+        <h3>HTML, CSS, & Javascript</h3>
+        <img-div id="img-div">
+          <img id="image" src="https://www.iflexion.com/sites/all/themes/iflexion/images/vis-frontend-1.png.pagespeed.ce.xWVJin1Y8_.png">
+          <figcaption id="img-caption">
+            Image: Frontend trinity
+          </figcaption>
+        </img-div>
+      </section>
+    </header>
+    <hr>
+    <main>
+      <h3 id="title">Applicant input form</h3>
+      <p id="description">Complete application form below</p>
+      <form id="survey-form">
+        <label id="name-label" for="name">Enter your name:</label>
+          <input id="name" type="text" placeholder="name..." required><br><br>
+        <label id="email-label" for "email">Enter your email:</label>
+          <input id="email" type="email" placeholder="email..." required><br><br>
+        <label id="number-label" for "number">Enter your number:</label>
+          <input id="number" type="number" min="1" max="10" placeholder="#..."><br><br>
+        <label id="dropdown-label" for="dropdown">Make a choice:</label>
+          <select id="dropdown" value="choices">
+            <option value="option1">option1</option>
+            <option value="option2">option2</option>
+            <option value="option3">option3</option>
+          </select><br><br>
+        <label id="radio-label" for="radio">Which one:</label>
+          a<input type="radio" name="r-buttons" value="a">
+          b<input type="radio" name="r-buttons" value="b">
+          c<input type="radio" name="r-buttons" value="c"><br><br>
+        <label id="checkbox-label" for="checkbox">Select:</label>
+          breakfast<input type="checkbox" name="c-box" value="breakfast">
+          lunch<input type="checkbox" name="c-box" value="lunch">
+          dinner<input type="checkbox" name="c-box" value="dinner"><br><br>
+        <label id="comments-label" for="comments">Add any additional comments:</label>
+        <textarea type="text" id="comments" rows="2" cols="30"></textarea><br><br>
+        <label id="submit-label" for="submit">Submit:</label>
+          <input id="submit" type="submit" value="submit">
+      </form>
+    </main>
+    <main>
+      <p id="main"></p>
+      <video id="video" width="320" height="240" controls>
+        <source src="https://www.youtube.com/watch?v=zOjov-2OZ0E" type="video/mp4">
+        <source src="https://www.youtube.com/watch?v=zOjov-2OZ0E" type="video/webm">
+      </video>
+      <form id="form" action="https://www.freecodecamp.com/email-submit">
+        <label id="email-label" for="email">Enter your email:</label>
+          <input id="email" type="email" name="email" placeholder="email..." required>
+        <br><br>
+        <label id="submit-label" for="submit">Click to submit</label>
+          <input type="submit" id="submit" value="submit">
+        <br><br>
+      </form>
+      <section>
+        <h3>Tools used for front-end development</h3>
+        <p>There are several tools and platforms, such as WordPress, Joomla, and Drupal, available that can be used to develop the front end of a website.</p>
+        <h4>Hyper Text Markup Language</h4>
+        <p>Hyper Text Markup Language (HTML) is the backbone of any website development process, without which a web page does not exist. Hypertext means that text has links, termed hyperlinks, embedded in it. When a user clicks on a word or a phrase that has a hyperlink, it will bring another web-page. A markup language indicates text can be turned into images, tables, links, and other representations. It is the HTML code that provides an overall framework of how the site will look. HTML was developed by Tim Berners-Lee. The latest version of HTML is called HTML5 and was published on October 28, 2014 by the W3 recommendation. This version contains new and efficient ways of handling elements such as video and audio files.</p>
+          <h4>Cascading Style Sheets (CSS)</h4>
+        <p>Cascading Style Sheets (CSS) controls the presentation aspect of the site and allows your site to have its own unique look. It does this by maintaining style sheets which sit on top of other style rules and are triggered based on other inputs, such as device screen size and resolution.</p>
+        <h4>JavaScript</h4>
+        <p>JavaScript is an event-based imperative programming language (as opposed to HTML's declarative language model) that is used to transform a static HTML page into a dynamic interface. JavaScript code can use the Document Object Model (DOM), provided by the HTML standard, to manipulate a web page in response to events, like user input.</p>
+        <p>Using a technique called AJAX, JavaScript code can also actively retrieve content from the web (independent of the original HTML page retrieval), and also react to server-side events as well, adding a truly dynamic nature to the web page experience.</p>
+        <h4>WebAssembly</h4>
+        <p>WebAssembly, supported by all the major browsers (i.e. from the major vendors Google, Apple, Mozilla and Microsoft), is the only alternative to JavaScript for running code in web browsers (without the help of plug-ins, such as Flash, Java or Silverlight; all being discontinued, as browsers are dropping plug-in support). Prior to its adoption, there was asm.js (a subset of JavaScript; and thus strictly works in all browsers), that's also used as a compiler target with efficient support in browsers such as Internet Explorer 11; and for such browsers that do not support WebAssembly directly, it can be compiled to asm.js and those browsers supported that way. Generally speaking programmers do not program in WebAssembly (or asm.js) directly, but use languages such as Rust, C or C++ or in theory any language, that compile to it.</p>
+    </main>
+    <main>
+      <section id="projects">
+        <div class="project-tile" id="project_1">
+          <h4>Project 1</h4>
+          <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+        </div>
+        <div class="project-tile" id="project_2">
+          <h4>Project 2</h4>
+          <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+      </section>
+    </main>
+
+    <main id="main-doc">
+      <h1>Computer Programming</h1>
+      <nav id="navbar">
+        <header>Navigation</header>
+        <a href=#First_section class="nav-link">First section</a>
+        <a href=#Second_section class="nav-link">Second section</a>
+        <a href=#Third_section class="nav-link">Third section</a>
+        <a href=#Fourth_section class="nav-link">Fourth section</a>
+        <a href=#Fifth_section class="nav-link">Fifth section</a>
+      </nav>
+      <section class="main-section" id="First_section">
+        <header>First section</header>
+        <h3>Coding</h3>
+        <ul>
+          <li>Functions such as <code>print</code></li>
+          <li>Objects such as a <code>class</code></li>
+          <li>Loops such as <code>for</code> and <code>while</code></li>
+          <li>Variable types such as <code>int</code></li>
+          <li>Statements such as <code>if</code></li>
+        </ul>
+      </section>
+      <section class="main-section" id="Second_section">
+        <header>Second section</header>
+        <h3>Projects</h3>
+        <ul>
+          <li>Word input game, using <code>input</code></li>
+          <li>Tic tac toe, using <code>print</code></li>
+          <li>Alien game, using a <code>class</code></li>
+          <li>Web scraping, using <code>requests</code></li>
+          <li>Machine learning, using <code>if</code></li>
+        </ul>
+      </section>
+      <section class="main-section" id="Third_section">
+        <header>Third section</header>
+        <h3>Data Structures & Algorithms</h3>
+        <p>Stack/Heap memory</p>
+        <p>Stack/Queue order</p>
+        <p>Array/Linked lists data structure</p>
+        <p>Trees</p>
+      </section>
+      <section class="main-section" id="Fourth_section">
+        <header>Fourth section</header>
+        <h3>Operating Systems</h3>
+        <p>Mac/Windows/Linux</p>
+        <p>Programming language levels</p>
+        <p>Electrical engineering</p>
+        <p>Networks</p>
+      </section>
+      <section class="main-section" id="Fifth_section">
+        <header>Fifth section</header>
+        <h3>Application</h3>
+        <p>Wep app</p>
+        <p>Mobile app</p>
+        <p>Game</p>
+        <p>Data science</p>
+      </section>
+    </main>
+      <section id="contact">
+        <h4>Contact me</h4>
+        <ul>
+          <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
+          <li>Email: xxx</li>
+        </ul>
+      </section>
+    <footer id="tribute-info">More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></footer>
+  </body>
+
+</html>

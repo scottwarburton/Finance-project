@@ -18,4 +18,11 @@ save info to sqlite - portfolio table
 
 View Portfolio
 display portfolio summary
+
+To activate:
+source proj/bin/activate    #virtual environment
+python3 app.py              #run to see on localhost:5000
+heroku login                #login to heroku through terminal
+git push heroku master      #to push update to heroku
+
 """
