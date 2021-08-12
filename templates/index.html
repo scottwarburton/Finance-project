@@ -38,8 +38,11 @@
                 <td>{{  stock.ticker  }}</td>
                 <td>{{  stock.units  }}</td>
                 <td>{{  stock.price  }}</td>
-                <td>{{  stock.date_added.date()  }}</td>
-                <td></td>
+                <td>
+                    <a href="/delete/{{stock.id}}">Delete</a>
+                    <br>
+                    <a href="/update/{{stock.id}}">Update</a>
+                </td>
             </tr>
         {% endfor %}
     </table>

@@ -13,7 +13,7 @@ class Stocks(db.Model):
     ticker = db.Column(db.String(10), nullable=False)
     units = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Numeric, nullable=False)
-    date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    #date_added = db.Column(db.DateTime, default=datetime.utcnow)
     def __repr__(self):
         return "<Stock %r>" % self.id
 
@@ -28,7 +28,7 @@ def index():
         except:
             return "Error adding stock"
     else:
-        stocks = Stocks.query.order_by(Stocks.date_added).all()
+        stocks = Stocks.query.all()
         return render_template("index.html", stocks=stocks)
 
 @app.route("/delete/<int:id>")
