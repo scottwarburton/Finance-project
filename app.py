@@ -1,6 +1,6 @@
 
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -8,63 +8,53 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 db = SQLAlchemy(app)
 
-@app.route("/")
-def home():
-    return render_template("home.html")
-"""
-
-class Todo(db.Model):
+class Stocks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    completed = db.Column(db.Integer, default=0)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-
+    ticker = db.Column(db.String(10), nullable=False)
+    units = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Numeric, nullable=False)
+    #date_added = db.Column(db.DateTime, default=datetime.utcnow)
     def __repr__(self):
-        return "<Task %r>" % self.id
-        #when creating a task, will return Task then id of task created
-
-#setup route so don't end up with 404 when searching url
+        return "<Stock %r>" % self.id
 
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
-        task_content = request.form["content"]  #create new task from input (html id)
-        new_task = Todo(content=task_content)
+        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"], price=request.form["price"])
         try:
-            db.session.add(new_task)    #add to our database
+            db.session.add(new_stock)
             db.session.commit()
-            return redirect("/") #then redirect back to our index page
+            return redirect("/")
         except:
-            return "Error adding task"
-        #when pressing submit button
+            return "Error adding stock"
     else:
-        tasks = Todo.query.order_by(Todo.date_created).all()    #ordering by newest to oldest (could do .first())
-        return render_template("index.html", tasks=tasks)   #
-        #when loading page
+        stocks = Stocks.query.all()
+        return render_template("index.html", stocks=stocks)
 
-@app.route("/delete/<int:id>")    #using id from table as unique identifier for tasks
+@app.route("/delete/<int:id>")
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    stock_to_delete = Stocks.query.get_or_404(id)
     try:
-        db.session.delete(task_to_delete)
+        db.session.delete(stock_to_delete)
         db.session.commit()
         return redirect("/")
     except:
-        return "Error deleting task"
+        return "Error deleting stock"
 
-@app.route("/update/<int:id>", methods=["GET", "POST"])
+@app.route("/update/<int:id>", methods=["POST", "GET"])
 def update(id):
-    task = Todo.query.get_or_404(id)
+    stock = Stocks.query.get_or_404(id)
     if request.method == "POST":
-        task.content = request.form["content"]
+        stock.ticker = request.form["ticker"]
+        stock.units = request.form["units"]
         try:
             db.session.commit()
             return redirect("/")
         except:
-            return "Error updating task"
+            return "Error updating stock"
     else:
-        return render_template("update.html", task=task)
-"""
+        return render_template("index.html", stock=stock)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
