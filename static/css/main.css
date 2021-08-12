@@ -30,26 +30,7 @@ td {
 body {
     background-color: CornflowerBlue;
     font-family: sans-serif;
-    margin: 170px;
-}
-section {
-    display: flex;
-    flex-wrap: wrap;
-    width: 600px;
-    text-align: justify;
-    border-color: red;
-}
-form {
-    display: flex;
-    justify-content: flex-start;
-}
-code {
-    background-color: #f1f1f1;
-    padding: 2px;
-}
-@media (max-width: 100px) {
-    display: flex;
-    justify-content: center;
+    margin-left: 170px;
 }
 .project-tile {
     display: grid;
@@ -59,9 +40,6 @@ code {
     width: 100%;
     max-width: 600px;
     text-align: center;
-    background: #B0E0E6;
+    background: #CCC;
     margin-bottom: 10px;
-}
-.projects {
-    background: #00F;
 }
