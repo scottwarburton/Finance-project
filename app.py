@@ -8,7 +8,16 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 db = SQLAlchemy(app)
 
-@app.route("/")
+class Stocks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ticker = db.Column(db.String(10), nullable=False)
+    units = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Decimal(7, 2), nullable=False)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    def __repr__(self):
+        return "<Stock %r>" % self.id
+
+@app.route("/", methods=["POST", "GET"])
 def home():
     return render_template("home.html")
 """
