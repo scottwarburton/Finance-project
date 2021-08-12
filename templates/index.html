@@ -6,75 +6,76 @@
 
 {% block body %}
 
-  <body>
-    <header>
-      <h1>Portfolio Analyser</h1>
-      <h3>Flask project</h3>
-      <br>
-      <nav id=nav-bar>
-        <a href="#h1" id="jump1" class="nav-link">Go To Start</a><br>
-        <a href="#main" id="jump2" class="nav-link">Go To Middle</a><br>
-        <a href="#footer" id="jump3" class="nav-link">Go To End</a><br>
-      </nav>
-      <img-div>
-        <img id="image-flask" class="logos" alt="flask-logo" src="static/images/flk-logo.png">
-        <img id="image-python" class="logos" alt="python-logo" src="static/images/python-logo.png">
-        <img id="image-sqlite" class="logos" alt="sqlite-logo" src="static/images/sqlite-logo.png">
-        <img id="image-css" class="logos" alt="css-logo" src="static/images/css-logo.png">
-        <img id="image-html" class="logos" alt="html-logo" src="static/images/html-logo.png">
-      </img-div>
-    </header>
-    <hr>
+    <body>
+        <header>
+            <h1>Portfolio Analyser</h1>
+            <h3>Flask project</h3>
+            <br>
+            <img-div>
+                <img id="image-flask" class="logos" alt="flask-logo" src="static/images/flk-logo.png">
+                <img id="image-python" class="logos" alt="python-logo" src="static/images/python-logo.png">
+                <img id="image-sqlite" class="logos" alt="sqlite-logo" src="static/images/sqlite-logo.png">
+                <img id="image-css" class="logos" alt="css-logo" src="static/images/css-logo.png">
+                <img id="image-html" class="logos" alt="html-logo" src="static/images/html-logo.png">
+            </img-div>
+        </header>
 
-    <table>
-        <tr>
-            <th>Ticker</th>
-            <th>Units</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-        {% for stock in stocks %}
+        <nav id=nav-bar>
+            <a href="#h1" id="jump1" class="nav-link">Go To Start</a><br>
+            <a href="#main" id="jump2" class="nav-link">Go To Middle</a><br>
+            <a href="#footer" id="jump3" class="nav-link">Go To End</a><br>
+        </nav>
+
+        <table>
             <tr>
-                <td>{{  stock.ticker  }}</td>
-                <td>{{  stock.units  }}</td>
-                <td>{{  stock.price  }}</td>
-                <td>
-                    <a href="/delete/{{stock.id}}">Delete</a>
-                    <br>
-                    <a href="/update/{{stock.id}}">Update</a>
-                </td>
+                <th>Ticker</th>
+                <th>Units</th>
+                <th>Price</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
-    </table>
-    <form action="/" method="POST">
-        <input type="text" name="ticker" id="ticker">
-        <input type="text" name="units" id="units">
-        <input type="text" name="price" id="price">
-        <input type="submit" value="Add Stock">
-    </form>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{  stock.ticker  }}</td>
+                    <td>{{  stock.units  }}</td>
+                    <td>{{  stock.price  }}</td>
+                    <td>
+                        <a href="/delete/{{stock.id}}">Delete</a>
+                        <br>
+                        <a href="/update/{{stock.id}}">Update</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <form action="/" method="POST">
+            <input type="text" name="ticker" id="ticker">
+            <input type="text" name="units" id="units">
+            <input type="text" name="price" id="price">
+            <input type="submit" value="Add Stock">
+        </form>
 
 
-    <main id="main-first">
-      <h3>Main-1</h3>
-      <section id="projects">
-        <div class="project-tile" id="project_1">
-          <h4>Project 1</h4>
-          <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
-        </div>
-        <div class="project-tile" id="project_2">
-          <h4>Project 2</h4>
-          <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
-      </section>
-    </main>
+        <main id="main-first">
+            <h3>Main-1</h3>
+            <section id="projects">
+                <div class="project-tile" id="project_1">
+                    <h4>Project 1</h4>
+                    <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+                </div>
+                <div class="project-tile" id="project_2">
+                    <h4>Project 2</h4>
+                    <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+                </div>
+            </section>
+        </main>
 
-      <section id="contact">
-        <h4>Contact me</h4>
-        <ul>
-          <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
-          <li>Email: xxx</li>
-        </ul>
-      </section>
-    <footer id="tribute-info">More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></footer>
-  </body>
+        <section id="contact">
+            <h4>Contact me</h4>
+            <ul>
+                <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
+                <li>Email: xxx</li>
+            </ul>
+        </section>
+        <footer id="tribute-info">More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></footer>
+    </body>
 
 {% endblock %}

@@ -9,18 +9,13 @@ nav {
     height: 100%;
     padding-top: 20px;
 }
-header {
-    background-color: #CCC;
-}
 img {
     width: 100px;
 }
-
 table, td, th {
     border: 1px solid #aaa;
     background-color: silver;
 }
-
 table {
     border-collapse: collapse;
     width: 100%;
@@ -32,7 +27,6 @@ td {
     text-align: center;
     padding: 2px;
 }
-
 body {
     background-color: CornflowerBlue;
     font-family: sans-serif;
