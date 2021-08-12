@@ -10,13 +10,14 @@
   <body>
     <header>
         <nav id=nav-bar>
-          <a href="#h1" id="jump1" class="nav-link">Go To Start</a>
-          <a href="#main" id="jump2" class="nav-link">Go To Middle</a>
-          <a href="#footer" id="jump2" class="nav-link">Go To End</a>
+          <a href="#h1" id="jump1" class="nav-link">Go To Start</a><br>
+          <a href="#main" id="jump2" class="nav-link">Go To Middle</a><br>
+          <a href="#footer" id="jump2" class="nav-link">Go To End</a><br>
         </nav>
-      <section>
+      <section id="section-header">
         <h1>SW's Frontend Development Journey</h1>
         <h3>HTML, CSS, & Javascript</h3>
+        <br>
         <img-div id="img-div">
           <img id="image" src="https://www.iflexion.com/sites/all/themes/iflexion/images/vis-frontend-1.png.pagespeed.ce.xWVJin1Y8_.png">
           <figcaption id="img-caption">
@@ -26,8 +27,8 @@
       </section>
     </header>
     <hr>
-    <main>
-      <h3 id="title">Applicant input form</h3>
+    <main id="main-first">
+      <h3 id="title">Main 1 - Applicant input form</h3>
       <p id="description">Complete application form below</p>
       <form id="survey-form">
         <label id="name-label" for="name">Enter your name:</label>
@@ -56,7 +57,8 @@
           <input id="submit" type="submit" value="submit">
       </form>
     </main>
-    <main>
+    <main id="main-second">
+      <h3>Main-2</h3>
       <p id="main"></p>
       <video id="video" width="320" height="240" controls>
         <source src="https://www.youtube.com/watch?v=zOjov-2OZ0E" type="video/mp4">
@@ -83,7 +85,8 @@
         <h4>WebAssembly</h4>
         <p>WebAssembly, supported by all the major browsers (i.e. from the major vendors Google, Apple, Mozilla and Microsoft), is the only alternative to JavaScript for running code in web browsers (without the help of plug-ins, such as Flash, Java or Silverlight; all being discontinued, as browsers are dropping plug-in support). Prior to its adoption, there was asm.js (a subset of JavaScript; and thus strictly works in all browsers), that's also used as a compiler target with efficient support in browsers such as Internet Explorer 11; and for such browsers that do not support WebAssembly directly, it can be compiled to asm.js and those browsers supported that way. Generally speaking programmers do not program in WebAssembly (or asm.js) directly, but use languages such as Rust, C or C++ or in theory any language, that compile to it.</p>
     </main>
-    <main>
+    <main id="main-third">
+      <h3>Main-3</h3>
       <section id="projects">
         <div class="project-tile" id="project_1">
           <h4>Project 1</h4>
@@ -94,19 +97,9 @@
           <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
       </section>
     </main>
-
-    <main id="main-doc">
-      <h1>Computer Programming</h1>
-      <nav id="navbar">
-        <header>Navigation</header>
-        <a href=#First_section class="nav-link">First section</a>
-        <a href=#Second_section class="nav-link">Second section</a>
-        <a href=#Third_section class="nav-link">Third section</a>
-        <a href=#Fourth_section class="nav-link">Fourth section</a>
-        <a href=#Fifth_section class="nav-link">Fifth section</a>
-      </nav>
+    <main id="main-fourth">
+      <h3>Main-4</h3>
       <section class="main-section" id="First_section">
-        <header>First section</header>
         <h3>Coding</h3>
         <ul>
           <li>Functions such as <code>print</code></li>
@@ -117,7 +110,6 @@
         </ul>
       </section>
       <section class="main-section" id="Second_section">
-        <header>Second section</header>
         <h3>Projects</h3>
         <ul>
           <li>Word input game, using <code>input</code></li>
@@ -128,7 +120,6 @@
         </ul>
       </section>
       <section class="main-section" id="Third_section">
-        <header>Third section</header>
         <h3>Data Structures & Algorithms</h3>
         <p>Stack/Heap memory</p>
         <p>Stack/Queue order</p>
@@ -136,7 +127,6 @@
         <p>Trees</p>
       </section>
       <section class="main-section" id="Fourth_section">
-        <header>Fourth section</header>
         <h3>Operating Systems</h3>
         <p>Mac/Windows/Linux</p>
         <p>Programming language levels</p>
@@ -144,7 +134,6 @@
         <p>Networks</p>
       </section>
       <section class="main-section" id="Fifth_section">
-        <header>Fifth section</header>
         <h3>Application</h3>
         <p>Wep app</p>
         <p>Mobile app</p>
