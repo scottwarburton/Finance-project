@@ -10,10 +10,7 @@ nav {
     padding-top: 20px;
 }
 header {
-    font-weight: bold;
     background-color: #CCC;
-    width: auto;
-    max-width: 800px;
 }
 img {
     width: 100px;
@@ -28,6 +25,7 @@ section {
     flex-wrap: wrap;
     width: 600px;
     text-align: justify;
+    border-color: red;
 }
 form {
     display: flex;
