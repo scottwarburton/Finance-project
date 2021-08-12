@@ -1,16 +1,20 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block head %}
-<title>Task Title</title>
+<title>Stock Update</title>
 {% endblock %}
 
 {% block body %}
 <div class="content">
-    <h1>Update task</h1>
+    <h1 style="text-align: center">Update Stock</h1>
 
-    <form action="/update/{{task.id}}" method="POST">
-        <input type="text" name="content" id="content", value="{{task.content}}">
-        <input type="submit" value="Update">
-    </form>
+    <div class="form">
+        <form action="/update/{{stock.id}}" method="POST">
+            <input type="text" name="ticker" id="ticker" value="{{stock.ticker}}">
+            <input type="number" name="units" id="units" value="{{stock.units}}">
+            <input type="number" name="price" id="price" value="{{stock.price}}">
+            <input type="submit" value="Update">
+        </form>
+    </div>
 </div>
 {% endblock %}

@@ -12,13 +12,13 @@ class Stocks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10), nullable=False)
     units = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Decimal(7, 2), nullable=False)
+    price = db.Column(db.Numeric, nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     def __repr__(self):
         return "<Stock %r>" % self.id
 
 @app.route("/", methods=["POST", "GET"])
-def home():
+def index():
     if request.method == "POST":
         new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"], price=request.form["price"])
         try:
@@ -29,60 +29,33 @@ def home():
             return "Error adding stock"
     else:
         portfolio_table = Stocks.query.order_by(Stocks.date_added).all()
-        return render_template("home.html", stock=portfolio_table)
-    return render_template("home.html")
-"""
+        return render_template("index.html", stock=portfolio_table)
+    return render_template("index.html")
 
-
-@app.route("/delete/<int:id>")    #using id from table as unique identifier for tasks
+@app.route("/delete/<int:id>")
 def delete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    stock_to_delete = Stocks.query.get_or_404(id)
     try:
-        db.session.delete(task_to_delete)
+        db.session.delete(stock_to_delete)
         db.session.commit()
         return redirect("/")
     except:
-        return "Error deleting task"
+        return "Error deleting stock"
 
-@app.route("/update/<int:id>", methods=["GET", "POST"])
+@app.route("/update/<int:id>", methods=["POST", "GET"])
 def update(id):
-    task = Todo.query.get_or_404(id)
+    stock = Stocks.query.get_or_404(id)
     if request.method == "POST":
-        task.content = request.form["content"]
+        stock.ticker = request.form["ticker"]
+        stock.units = request.form["units"]
         try:
             db.session.commit()
             return redirect("/")
         except:
-            return "Error updating task"
+            return "Error updating stock"
     else:
-        return render_template("update.html", task=task)
-        
-        
-class Todo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    completed = db.Column(db.Integer, default=0)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    def __repr__(self):
-        return "<Task %r>" % self.id
-        #when creating a task, will return Task then id of task created
-@app.route("/", methods=["POST", "GET"])
-def index():
-    if request.method == "POST":
-        task_content = request.form["content"]  #create new task from input (html id)
-        new_task = Todo(content=task_content)
-        try:
-            db.session.add(new_task)    #add to our database
-            db.session.commit()
-            return redirect("/") #then redirect back to our index page
-        except:
-            return "Error adding task"
-        #when pressing submit button
-    else:
-        tasks = Todo.query.order_by(Todo.date_created).all()    #ordering by newest to oldest (could do .first())
-        return render_template("index.html", tasks=tasks)   #
-        #when loading page
-"""
+        return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
