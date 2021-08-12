@@ -5,13 +5,12 @@ nav {
     left: 0;
     z-index: 1;
     background-color: #888;
-    width: 100px;
+    width: 150px;
     height: 100%;
     padding-top: 20px;
 }
 header {
     font-weight: bold;
-    font-size: 20px;
     background-color: #CCC;
     width: auto;
     max-width: 800px;
@@ -22,7 +21,7 @@ img {
 body {
     background-color: CornflowerBlue;
     font-family: sans-serif;
-    margin: 120px;
+    margin: 170px;
 }
 section {
     display: flex;
