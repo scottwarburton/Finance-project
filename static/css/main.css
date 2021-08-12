@@ -15,6 +15,24 @@ header {
 img {
     width: 100px;
 }
+
+table, td, th {
+    border: 1px solid #aaa;
+    background-color: silver;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    height: 20px;
+}
+td {
+    text-align: center;
+    padding: 2px;
+}
+
 body {
     background-color: CornflowerBlue;
     font-family: sans-serif;
