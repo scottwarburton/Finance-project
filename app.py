@@ -28,9 +28,8 @@ def index():
         except:
             return "Error adding stock"
     else:
-        portfolio_table = Stocks.query.order_by(Stocks.date_added).all()
-        return render_template("index.html", stock=portfolio_table)
-    return render_template("index.html")
+        stocks = Stocks.query.order_by(Stocks.date_added).all()
+        return render_template("index.html", stocks=stocks)
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -54,7 +53,7 @@ def update(id):
         except:
             return "Error updating stock"
     else:
-        return render_template("index.html")
+        return render_template("index.html", stock=stock)
 
 
 if __name__ == "__main__":
