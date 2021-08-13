@@ -4,9 +4,11 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 db = SQLAlchemy(app)
+
 
 class Stocks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,17 +20,23 @@ class Stocks(db.Model):
     def __repr__(self):
         return "<Stock %r>" % self.id
 
-def find_stock(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, "lxml")
-    return soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"})
+class Current(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ticker = db.Column(db.String(10))
+    price = db.Column(db.String(200))
+    def __repr(self):
+        return "<Current %r>" % self.id
 
-def page_check():
-    url = "https://finance.yahoo.com/quote/" + str(request.form["ticker_input"])
+
+def find_stock():
+    url = "https://finance.yahoo.com/quote/" + str(request.form["ticker-search"])
     if not requests.get(url).status_code:
-        print("Invalid stock ticker")
+        return "Invalid stock ticker"
     else:
-        find_stock(url)
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, "lxml")
+        return soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text
+
 
 @app.route("/", methods=["POST", "GET"])
 def index():
@@ -44,10 +52,19 @@ def index():
             except:
                 return "Error adding stock"
         elif request.form.get("submit-search"):
-            current_price = page_check()
+            new_search = Current(ticker=request.form["ticker-search"], price=str(find_stock()))
+            try:
+                db.session.add(new_search)
+                db.session.commit()
+                return redirect("/")
+            except:
+                return "Error searching stock"
     else:
         stocks = Stocks.query.all()
-        return render_template("index.html", stocks=stocks, current_price=current_price)
+
+        current = Current.query.order_by(Current.id.desc()).first()
+        return render_template("index.html", stocks=stocks, current=current)
+
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -58,6 +75,7 @@ def delete(id):
         return redirect("/")
     except:
         return "Error deleting stock"
+
 
 @app.route("/update/<int:id>", methods=["POST", "GET"])
 def update(id):
