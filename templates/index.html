@@ -3,77 +3,61 @@
 <title>Stock Index</title>
 {% endblock %}
 {% block body %}
-    <body>
-        <header>
-            <h1>Portfolio Analyser</h1>
-            <img-div>
-                <img id="image-flask" class="logos" alt="flask-logo" src="static/images/flk-logo.png">
-                <img id="image-python" class="logos" alt="python-logo" src="static/images/python-logo.png">
-                <img id="image-sqlite" class="logos" alt="sqlite-logo" src="static/images/sqlite-logo.png">
-                <img id="image-css" class="logos" alt="css-logo" src="static/images/css-logo.png">
-                <img id="image-html" class="logos" alt="html-logo" src="static/images/html-logo.png">
-            </img-div>
-        </header>
-
-        <nav id=nav-bar>
-            <h3>Navigation</h3>
-            <a href="#portfolio" id="jump1" class="nav-link">Go To Portfolio</a><br>
-            <a href="#add-stocks" id="jump2" class="nav-link">Go To Add Stocks</a><br>
-            <a href="#analysis" id="jump3" class="nav-link">Go To Analysis</a><br>
-        </nav>
-
-        <h3 id="portfolio">Current Portfolio</h3>
-        <table>
+<body>
+    <h3 id="portfolio">Current Portfolio</h3>
+    <table>
+        <tr>
+            <th>Ticker</th>
+            <th>Units</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+        {% for stock in stocks %}
             <tr>
-                <th>Ticker</th>
-                <th>Units</th>
-                <th>Price</th>
-                <th>Actions</th>
+                <td>{{  stock.ticker  }}</td>
+                <td>{{  stock.units  }}</td>
+                <td>{{  stock.price  }}</td>
+                <td>{{  stock.total }}</td>
+                <td>
+                    <a href="/delete/{{stock.id}}">Delete</a>
+                    <br>
+                    <a href="/update/{{stock.id}}">Update</a>
+                </td>
             </tr>
-            {% for stock in stocks %}
-                <tr>
-                    <td>{{  stock.ticker  }}</td>
-                    <td>{{  stock.units  }}</td>
-                    <td>{{  stock.price  }}</td>
-                    <td>
-                        <a href="/delete/{{stock.id}}">Delete</a>
-                        <br>
-                        <a href="/update/{{stock.id}}">Update</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-        <br><br><br><br>
-        <h3 id="add-stocks">Add Stocks</h3>
-        <form action="/" method="POST">
-            <input type="text" name="ticker" id="ticker">
-            <input type="text" name="units" id="units">
-            <input type="text" name="price" id="price">
-            <input type="submit" value="Add Stock">
-        </form>
-        <br><br><br><br>
-        <main id="analysis">
-            <h3>Portfolio Analysis</h3>
-            <section id="projects">
-                <div class="project-tile" id="project_1">
-                    <h4>Project 1</h4>
-                    <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
-                </div>
-                <div class="project-tile" id="project_2">
-                    <h4>Project 2</h4>
-                    <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
-                </div>
-            </section>
-        </main>
-        <br><br><br><br>
-        <section id="contact">
-            <h4>Contact me</h4>
-            <ul>
-                <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
-                <li>Email: xxx</li>
-            </ul>
+        {% endfor %}
+    </table>
+    <br><br><br><br>
+    <h3 id="add-stocks">Add Stocks</h3>
+    <form action="/" method="POST">
+        <input type="text" name="ticker" id="ticker">
+        <input type="number" name="units" id="units">
+        <input type="text" name="price" id="price">
+        <input type="submit" value="Add Stock">
+    </form>
+    <br><br><br><br>
+    <main id="analysis">
+        <h3>Portfolio Analysis</h3>
+        <section id="projects">
+            <div class="project-tile" id="project_1">
+                <h4>Project 1</h4>
+                <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+            </div>
+            <div class="project-tile" id="project_2">
+                <h4>Project 2</h4>
+                <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+            </div>
         </section>
-        <footer id="tribute-info">More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></footer>
-    </body>
+    </main>
+    <br><br><br><br>
+    <section id="contact">
+        <h4>Contact me</h4>
+        <ul>
+            <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
+            <li>Email: xxx</li>
+        </ul>
+    </section>
+    <footer id="tribute-info">More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></footer>
+</body>
 
 {% endblock %}

@@ -11,7 +11,7 @@
     <div class="form">
         <form action="/update/{{stock.id}}" method="POST">
             <input type="text" name="ticker" id="ticker" value="{{stock.ticker}}">
-            <input type="text" name="units" id="units" value="{{stock.units}}">
+            <input type="number" name="units" id="units" value="{{stock.units}}">
             <input type="text" name="price" id="price" value="{{stock.price}}">
             <input type="submit" value="Update">
         </form>

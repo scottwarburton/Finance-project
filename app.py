@@ -11,6 +11,7 @@ class Stocks(db.Model):
     ticker = db.Column(db.String(10), nullable=False)
     units = db.Column(db.Integer, nullable=False)
     price = db.Column(db.Numeric, nullable=False)
+    total = db.Column(db.Numeric)
     #date_added = db.Column(db.DateTime, default=datetime.utcnow)
     def __repr__(self):
         return "<Stock %r>" % self.id
@@ -18,7 +19,8 @@ class Stocks(db.Model):
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
-        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"], price=request.form["price"])
+        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
+                           price=request.form["price"], total=(int(request.form["units"]) * float(request.form["price"])))
         try:
             db.session.add(new_stock)
             db.session.commit()
@@ -45,6 +47,8 @@ def update(id):
     if request.method == "POST":
         stock.ticker = request.form["ticker"]
         stock.units = request.form["units"]
+        stock.price = request.form["price"]
+        stock.total = request.form["units"] * request.form["price"]
         try:
             db.session.commit()
             return redirect("/")
