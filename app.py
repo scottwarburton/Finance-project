@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
@@ -16,20 +18,36 @@ class Stocks(db.Model):
     def __repr__(self):
         return "<Stock %r>" % self.id
 
+def find_stock(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "lxml")
+    return soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"})
+
+def page_check():
+    url = "https://finance.yahoo.com/quote/" + str(request.form["ticker_input"])
+    if not requests.get(url).status_code:
+        print("Invalid stock ticker")
+    else:
+        find_stock(url)
+
 @app.route("/", methods=["POST", "GET"])
 def index():
+    current_price = "-"
     if request.method == "POST":
-        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
-                           price=request.form["price"], total=(int(request.form["units"]) * float(request.form["price"])))
-        try:
-            db.session.add(new_stock)
-            db.session.commit()
-            return redirect("/")
-        except:
-            return "Error adding stock"
+        if request.form.get("submit-add"):
+            new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
+                               price=request.form["price"], total=(int(request.form["units"]) * float(request.form["price"])))
+            try:
+                db.session.add(new_stock)
+                db.session.commit()
+                return redirect("/")
+            except:
+                return "Error adding stock"
+        elif request.form.get("submit-search"):
+            current_price = page_check()
     else:
         stocks = Stocks.query.all()
-        return render_template("index.html", stocks=stocks)
+        return render_template("index.html", stocks=stocks, current_price=current_price)
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -58,7 +76,7 @@ def update(id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
 
 
 
