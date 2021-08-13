@@ -1,63 +1,66 @@
 {% extends 'base.html' %}
-{% block head %}
-<title>Stock Index</title>
-{% endblock %}
-{% block body %}
-<body>
-    <h3 id="portfolio">Current Portfolio</h3>
-    <table>
-        <tr>
-            <th>Ticker</th>
-            <th>Units</th>
-            <th>Price</th>
-            <th>Total</th>
-            <th>Actions</th>
-        </tr>
-        {% for stock in stocks %}
-            <tr>
-                <td>{{  stock.ticker  }}</td>
-                <td>{{  stock.units  }}</td>
-                <td>{{  stock.price  }}</td>
-                <td>{{  stock.total }}</td>
-                <td>
-                    <a href="/delete/{{stock.id}}">Delete</a>
-                    <br>
-                    <a href="/update/{{stock.id}}">Update</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    <br><br><br><br>
-    <h3 id="add-stocks">Add Stocks</h3>
-    <form action="/" method="POST">
-        <input type="text" name="ticker" id="ticker">
-        <input type="number" name="units" id="units">
-        <input type="text" name="price" id="price">
-        <input type="submit" value="Add Stock">
-    </form>
-    <br><br><br><br>
-    <main id="analysis">
-        <h3>Portfolio Analysis</h3>
-        <section id="projects">
-            <div class="project-tile" id="project_1">
-                <h4>Project 1</h4>
-                <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
-            </div>
-            <div class="project-tile" id="project_2">
-                <h4>Project 2</h4>
-                <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
-            </div>
-        </section>
-    </main>
-    <br><br><br><br>
-    <section id="contact">
-        <h4>Contact me</h4>
-        <ul>
-            <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
-            <li>Email: xxx</li>
-        </ul>
-    </section>
-    <footer id="tribute-info">More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></footer>
-</body>
 
+{% block body %}
+<h3 id="portfolio">Current Portfolio</h3>
+<table>
+    <tr>
+        <th>Ticker</th>
+        <th>Units</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Date Added</th>
+        <th>Actions</th>
+    </tr>
+    {% for stock in stocks %}
+        <tr>
+            <td>{{  stock.ticker  }}</td>
+            <td>{{  stock.units  }}</td>
+            <td>{{  stock.price  }}</td>
+            <td>{{  stock.total }}</td>
+            <td>{{  stock.date_added.date()  }}</td>
+            <td>
+                <a href="/delete/{{stock.id}}">Delete</a>
+                <br>
+                <a href="/update/{{stock.id}}">Update</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+<br><br>
+<h3 id="add-stocks">Add Stocks</h3>
+<form action="/" method="POST">
+    <label for="ticker">Ticker:</label>
+    <input type="text" name="ticker" id="ticker" required>
+
+    <label for="units">Units:</label>
+    <input type="number" name="units" id="units" required>
+
+    <label for="price">Price:</label>
+    <input type="text" name="price" id="price" required>
+
+    <input type="submit" value="Add Stock">
+</form>
+<br><br>
+<main id="analysis">
+    <h3>Portfolio Analysis</h3>
+    <section id="projects">
+        <div class="project-tile" id="project_1">
+            <h4>Project 1</h4>
+            <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+        </div>
+        <div class="project-tile" id="project_2">
+            <h4>Project 2</h4>
+            <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+        </div>
+    </section>
+</main>
+<br><br>
+<section id="contact">
+    <h4>Contact me</h4>
+    <ul>
+        <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
+        <li>Email: xxx</li>
+    </ul>
+</section>
+<footer id="tribute-info">More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></footer>
 {% endblock %}

@@ -7,13 +7,20 @@ nav {
     width: 150px;
     height: 100%;
     padding-top: 20px;
+    font-size: 14px;
+    line-height: 20px;
 }
-img-div {
-    flex: wrap;
-    background-color: white;
+.logos {
+    height: 60px;
+    width: 80px;
+    padding: 20px;
+    opacity: 0.5;
+    margin-left: 10px;
 }
-img {
+img:hover {
+    height: 80px;
     width: 100px;
+     opacity: 1;
 }
 table, td, th {
     border: 1.5px solid #FFF;
