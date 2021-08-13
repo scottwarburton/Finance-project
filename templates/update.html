@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="content">
-    <h3>Update Stock: {{stock.ticker}}</h3>
 
-    <div class="form">
-        <form action="/update/{{stock.id}}" method="POST">
-            <label for="units">Units:</label>
-            <input type="number" name="units" id="units">
+<h3>Update Stock: {{stock.ticker}}</h3>
 
-            <label for="price">Price:</label>
-            <input type="text" name="price" id="price">
+<div class="form">
+    <form action="/update/{{stock.id}}" method="POST">
+        <label for="units">Units:</label>
+        <input type="number" name="units" id="units">
 
-            <input type="submit" value="Add Stock">
-        </form>
-    </div>
+        <label for="price">Price:</label>
+        <input type="text" name="price" id="price">
+
+        <input type="submit" name="submit-update" value="Add Stock">
+    </form>
 </div>
+
 {% endblock %}

@@ -38,8 +38,21 @@
     <label for="price">Price:</label>
     <input type="text" name="price" id="price" required>
 
-    <input type="submit" value="Add Stock">
+    <input type="submit" name="submit-add" value="Add Stock">
 </form>
+<br><br>
+
+<h3>Check current stock price</h3>
+<p>"Example tickers: AAPL, AMZN, GOOG</p>
+<p>Stock price: {{ current.price }}</p>
+
+<form action="/" method="POST">
+    <label for="ticker-search"</label>
+    <input type="text" name="ticker-search" id="ticker-search" required>
+
+    <input type="submit" name="submit-search" value="Search">
+</form>
+
 <br><br>
 <main id="analysis">
     <h3>Portfolio Analysis</h3>
