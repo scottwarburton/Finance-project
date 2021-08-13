@@ -1,5 +1,3 @@
-
-
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -12,15 +10,17 @@ class Stocks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10), nullable=False)
     units = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Numeric, nullable=False)
-    #date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    price = db.Column(db.Numeric(9,2), nullable=False)
+    total = db.Column(db.Numeric(9,2))
+    date_added = db.Column(db.DateTime, default=datetime.utcnow)
     def __repr__(self):
         return "<Stock %r>" % self.id
 
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
-        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"], price=request.form["price"])
+        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
+                           price=request.form["price"], total=(int(request.form["units"]) * float(request.form["price"])))
         try:
             db.session.add(new_stock)
             db.session.commit()
@@ -45,15 +45,16 @@ def delete(id):
 def update(id):
     stock = Stocks.query.get_or_404(id)
     if request.method == "POST":
-        stock.ticker = request.form["ticker"]
         stock.units = request.form["units"]
+        stock.price = request.form["price"]
+        stock.total = int(request.form["units"]) * float(request.form["price"])
         try:
             db.session.commit()
             return redirect("/")
         except:
             return "Error updating stock"
     else:
-        return render_template("index.html", stock=stock)
+        return render_template("update.html", stock=stock)
 
 
 if __name__ == "__main__":
