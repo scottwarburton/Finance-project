@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">Update Stock</h1>
+    <h3>Update Stock: {{stock.ticker}}</h3>
 
     <div class="form">
         <form action="/update/{{stock.id}}" method="POST">
