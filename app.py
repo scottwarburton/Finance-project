@@ -42,13 +42,13 @@ def find_stock():
     else:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "lxml")
-        stock_price = soup.find_all("span", {"class": "Trsdu(0.3s)"})[18]
-        stock_pe = soup.find_all("span", {"class": "Trsdu(0.3s)"})[28]
-        stock_beta = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})[4]
-        stock_mcap = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})[0]
-        stock_pm = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})[1]
-        stock_de = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})[2]
-        stock_cur = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})[3]
+        stock_price = soup.find("div", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"})
+        stock_pe = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_beta = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_mcap = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_pm = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_de = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_cur = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
         return [stock_price, stock_pe, stock_beta, stock_mcap, stock_pm, stock_de, stock_cur]
 
 
@@ -78,7 +78,7 @@ def index():
                 return "Error searching stock"
     else:
         stocks = Stocks.query.all()
-        current = Current.query.order_by(Current.id.desc()).first()
+        current = Current.query.order_by(Current.id.desc()).all()
         return render_template("index.html", stocks=stocks, current=current)
 
 

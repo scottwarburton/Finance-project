@@ -44,8 +44,7 @@
 
 <h3>Check current stock price</h3>
 <p>"Example tickers: AAPL, AMZN, GOOG</p>
-
-{% for i in current %}
+<table>
     <tr>
         <th>Ticker</th>
         <th>Price</th>
@@ -56,6 +55,7 @@
         <th>D/E</th>
         <th>Current ratio</th>
     </tr>
+    {% for i in current %}
     <tr>
         <td>{{  i.ticker  }}</td>
         <td>{{  i.price  }}</td>
@@ -67,6 +67,7 @@
         <td>{{  i.cur  }}</td>
     </tr>
 {% endfor %}
+</table>
 
 <form action="/" method="POST">
     <label for="ticker-search"</label>
