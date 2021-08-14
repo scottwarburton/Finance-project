@@ -4,7 +4,6 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 db = SQLAlchemy(app)
@@ -14,37 +13,52 @@ class Stocks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10), nullable=False)
     units = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Numeric(9,2), nullable=False)
-    total = db.Column(db.Numeric(9,2))
+    price = db.Column(db.Numeric(9, 2), nullable=False)
+    total = db.Column(db.Numeric(9, 2))
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
+
     def __repr__(self):
         return "<Stock %r>" % self.id
+
 
 class Current(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10))
-    price = db.Column(db.String(200))
-    def __repr(self):
+    price = db.Column(db.String(10))
+    pe = db.Column(db.String(10))
+    beta = db.Column(db.String(10))
+    mcap = db.Column(db.String(10))
+    pm = db.Column(db.String(10))
+    de = db.Column(db.String(10))
+    cur = db.Column(db.String(10))
+    def __repr__(self):
         return "<Current %r>" % self.id
 
 
 def find_stock():
-    url = "https://finance.yahoo.com/quote/" + str(request.form["ticker-search"])
+    url = "https://finance.yahoo.com/quote/" + str(request.form["ticker-search"]) + "/key-statistics"
     if not requests.get(url).status_code:
         return "Invalid stock ticker"
     else:
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "lxml")
-        return soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text
+        stock_price = soup.find("div", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"})
+        stock_pe = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_beta = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_mcap = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_pm = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_de = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        stock_cur = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
+        return [stock_price, stock_pe, stock_beta, stock_mcap, stock_pm, stock_de, stock_cur]
 
 
 @app.route("/", methods=["POST", "GET"])
 def index():
-    current_price = "-"
     if request.method == "POST":
         if request.form.get("submit-add"):
             new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
-                               price=request.form["price"], total=(int(request.form["units"]) * float(request.form["price"])))
+                               price=request.form["price"],
+                               total=(int(request.form["units"]) * float(request.form["price"])))
             try:
                 db.session.add(new_stock)
                 db.session.commit()
@@ -52,7 +66,10 @@ def index():
             except:
                 return "Error adding stock"
         elif request.form.get("submit-search"):
-            new_search = Current(ticker=request.form["ticker-search"], price=str(find_stock()))
+            stock_stats = find_stock()
+            new_search = Current(ticker=request.form["ticker-search"], price=str(stock_stats[0]),
+                                 pe=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]),
+                                 pm=str(stock_stats[4]), de=str(stock_stats[5]), cur=str(stock_stats[6]))
             try:
                 db.session.add(new_search)
                 db.session.commit()
@@ -61,8 +78,7 @@ def index():
                 return "Error searching stock"
     else:
         stocks = Stocks.query.all()
-
-        current = Current.query.order_by(Current.id.desc()).first()
+        current = Current.query.order_by(Current.id.desc()).all()
         return render_template("index.html", stocks=stocks, current=current)
 
 
@@ -95,9 +111,3 @@ def update(id):
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
-
-
-
-
-
-
