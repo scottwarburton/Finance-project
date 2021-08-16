@@ -24,32 +24,30 @@ class Stocks(db.Model):
 class Current(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10))
-    price = db.Column(db.String(10))
-    pe = db.Column(db.String(10))
-    beta = db.Column(db.String(10))
+    price = db.Column(db.Numeric(9,2))
+    daily_return = db.Column(db.Numeric(9,4))
+    beta = db.Column(db.Numeric(9,2))
     mcap = db.Column(db.String(10))
-    pm = db.Column(db.String(10))
-    de = db.Column(db.String(10))
-    cur = db.Column(db.String(10))
+    pe = db.Column(db.Numeric(9,2))
+
     def __repr__(self):
         return "<Current %r>" % self.id
 
 
 def find_stock():
-    url = "https://finance.yahoo.com/quote/" + str(request.form["ticker-search"]) + "/key-statistics"
+    url = "https://finance.yahoo.com/quote/" + str(request.form["ticker-search"])
     if not requests.get(url).status_code:
         return "Invalid stock ticker"
     else:
-        response = requests.get(url)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, "lxml")
-        stock_price = soup.find("div", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"})
-        stock_pe = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
-        stock_beta = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
-        stock_mcap = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
-        stock_pm = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
-        stock_de = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
-        stock_cur = soup.find_all("td", {"class": "Fw(500) Ta(end) Pstart(10px) Miw(60px)"})
-        return [stock_price, stock_pe, stock_beta, stock_mcap, stock_pm, stock_de, stock_cur]
+        stock_price = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[18].text.replace(",", ""))
+        stock_daily_return = stock_price / float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[20].text.replace(",", "")) - 1
+        stock_beta = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[25].text.replace(",", ""))
+        stock_mcap = soup.find_all("span", {"class": "Trsdu(0.3s)"})[24].text
+        stock_pe = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[26].text.replace(",", ""))
+        return [stock_price, stock_daily_return, stock_beta, stock_mcap, stock_pe]
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -68,8 +66,7 @@ def index():
         elif request.form.get("submit-search"):
             stock_stats = find_stock()
             new_search = Current(ticker=request.form["ticker-search"], price=str(stock_stats[0]),
-                                 pe=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]),
-                                 pm=str(stock_stats[4]), de=str(stock_stats[5]), cur=str(stock_stats[6]))
+                                 daily_return=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]), pe=str(stock_stats[4]))
             try:
                 db.session.add(new_search)
                 db.session.commit()
