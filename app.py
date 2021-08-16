@@ -42,11 +42,11 @@ def find_stock():
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, "lxml")
-        stock_price = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[18].text)
-        stock_daily_return = stock_price / float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[20].text) - 1
-        stock_beta = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[25].text)
+        stock_price = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[18].text.replace(",", ""))
+        stock_daily_return = stock_price / float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[20].text.replace(",", "")) - 1
+        stock_beta = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[25].text.replace(",", ""))
         stock_mcap = soup.find_all("span", {"class": "Trsdu(0.3s)"})[24].text
-        stock_pe = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[26].text)
+        stock_pe = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[26].text.replace(",", ""))
         return [stock_price, stock_daily_return, stock_beta, stock_mcap, stock_pe]
 
 
