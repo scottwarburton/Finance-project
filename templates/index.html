@@ -48,23 +48,19 @@
     <tr>
         <th>Ticker</th>
         <th>Price</th>
-        <th>P/E</th>
+        <th>Daily Return</th>
         <th>Beta</th>
         <th>MCap</th>
-        <th>Margin</th>
-        <th>D/E</th>
-        <th>Current ratio</th>
+        <th>P/E</th>
     </tr>
     {% for i in current %}
     <tr>
         <td>{{  i.ticker  }}</td>
         <td>{{  i.price  }}</td>
-        <td>{{  i.pe  }}</td>
-        <td>{{  i.beta }}</td>
+        <td>{{  i.daily_return  }}</td>
+        <td>{{  i.beta  }}</td>
         <td>{{  i.mcap  }}</td>
-        <td>{{  i.pm  }}</td>
-        <td>{{  i.de  }}</td>
-        <td>{{  i.cur  }}</td>
+        <td>{{  i.pe  }}</td>
     </tr>
 {% endfor %}
 </table>
