@@ -2,13 +2,13 @@
 
 {% block body %}
 
-
     <ul class="tabs">
         <li data-tab-target="#tab1" class="active tab">Current Portfolio</li>
         <li data-tab-target="#tab2" class="tab">Stock Analysis</li>
         <li data-tab-target="#tab3" class="tab">Project Tiles</li>
     </ul>
-    <div class="tab-content">
+
+    <main class="tab-content">
         <div id="tab1" data-tab-content class="active">
             <h3 id="portfolio">Current Portfolio</h3>
             <table>
@@ -35,7 +35,9 @@
                     </tr>
                 {% endfor %}
             </table>
+
             <br><br>
+
             <h3 id="add-stocks">Add Stocks</h3>
             <form action="/" method="POST">
                 <label for="ticker">Ticker:</label>
@@ -49,12 +51,12 @@
 
                 <input type="submit" name="submit-add" value="Add Stock">
             </form>
-            <br><br>
 
         </div>
         <div id="tab2" data-tab-content>
             <h3>Check current stock price</h3>
             <p>"Example tickers: AAPL, AMZN, GOOG</p>
+            <br><br>
             <table>
                 <tr>
                     <th>Ticker</th>
@@ -75,18 +77,16 @@
                 </tr>
             {% endfor %}
             </table>
-
+            <br><br>
             <form action="/" method="POST">
-                <label for="ticker-search"</label>
+                <label for="ticker-search">Enter ticker: </label>
                 <input type="text" name="ticker-search" id="ticker-search" required>
 
                 <input type="submit" name="submit-search" value="Search">
             </form>
 
-            <br><br>
         </div>
         <div id="tab3" data-tab-content>
-            <main id="analysis">
             <h3>Portfolio Analysis</h3>
             <section id="projects">
                 <div class="project-tile" id="project_1">
@@ -98,12 +98,9 @@
                     <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
                 </div>
             </section>
-        </main>
-        <br><br>
-        </div>
-    </div>
 
-    <br><br>
+        </div>
+    </main>
 
 <br><br>
 
