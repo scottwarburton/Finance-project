@@ -1,6 +1,8 @@
-header {
-    background-image: url("images/python-logo.png");
+#main-header {
+    background-image: url("static/images/python-logo.png");
     background-size: cover;
+    background-color: red;
+    height: 100px;
 }
 
 nav {
