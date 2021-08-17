@@ -1,3 +1,8 @@
+header {
+    background-image: url("images/python-logo.png");
+    background-size: cover;
+}
+
 nav {
     position: fixed;
     top: 0;
@@ -44,4 +49,28 @@ body {
     text-align: center;
     background: #CCC;
     margin-bottom: 10px;
+}
+[data-tab-content] {
+    display: none;
+}
+.active[data-tab-content] {
+    display: block;
+}
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid black;
+}
+.tab {
+    cursor: pointer;
+    padding: 10px;
+}
+.tab.active {
+    background-color: #CCC
+}
+.tab:hover {
+    background-color: #AAA;
 }

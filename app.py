@@ -24,11 +24,11 @@ class Stocks(db.Model):
 class Current(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10))
-    price = db.Column(db.Numeric(9,2))
-    daily_return = db.Column(db.Numeric(9,4))
-    beta = db.Column(db.Numeric(9,2))
+    price = db.Column(db.Numeric(9, 2))
+    daily_return = db.Column(db.Numeric(9, 4))
+    beta = db.Column(db.Numeric(9, 2))
     mcap = db.Column(db.String(10))
-    pe = db.Column(db.Numeric(9,2))
+    pe = db.Column(db.Numeric(9, 2))
 
     def __repr__(self):
         return "<Current %r>" % self.id
@@ -42,11 +42,16 @@ def find_stock():
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, "lxml")
-        stock_price = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[18].text.replace(",", ""))
-        stock_daily_return = stock_price / float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[20].text.replace(",", "")) - 1
-        stock_beta = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[25].text.replace(",", ""))
-        stock_mcap = soup.find_all("span", {"class": "Trsdu(0.3s)"})[24].text
-        stock_pe = float(soup.find_all("span", {"class": "Trsdu(0.3s)"})[26].text.replace(",", ""))
+        stock_price = float(soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text.replace(",", ""))
+        prev_price = float(soup.find("div", {"data-test": "left-summary-table"}).find("table").find("tbody").find_all("tr")[0].find_all("td")[
+            1].text.replace(",",""))
+        stock_daily_return = stock_price / prev_price - 1
+        stock_beta = float(soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[1].find_all(
+            "td")[1].find("span").text.replace(",",""))
+        stock_mcap = soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[0].find_all(
+            "td")[1].find("span").text
+        stock_pe = float(soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[2].find_all(
+            "td")[1].find("span").text.replace(",",""))
         return [stock_price, stock_daily_return, stock_beta, stock_mcap, stock_pe]
 
 
