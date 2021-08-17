@@ -1,10 +1,26 @@
-#main-header {
-    background-image: url("static/images/python-logo.png");
-    background-size: cover;
-    background-color: red;
-    height: 100px;
+* {
+    font-family: serif;
 }
-
+h1, body {
+    margin: 0px;
+    padding: 0px;
+}
+h1 {
+    color: #CCC;
+    font-weight: normal;
+    font-size: 50px;
+    text-align: center;
+    line-height: 200px;
+}
+#main-header {
+    background-image: url("../images/header.jpeg");
+    background-size: 100% 100%;
+    height: 200px;
+    opacity: 0.8;
+}
+.tab-content {
+    margin: 20px;
+}
 nav {
     position: fixed;
     top: 0;
@@ -12,8 +28,6 @@ nav {
     z-index: 1;
     background-color: #888;
     width: 150px;
-    height: 100%;
-    padding-top: 20px;
     font-size: 14px;
     line-height: 20px;
 }
@@ -27,19 +41,34 @@ nav {
 img:hover {
     height: 80px;
     width: 100px;
-     opacity: 1;
+    opacity: 1;
 }
 table, td, th {
     border: 1.5px solid #FFF;
     background-color: silver;
     border-collapse: collapse;
-    width: 600px;
     text-align: center;
+}
+table {
+    width: 90%
+}
+th {
+    height: 50px;
+    background-color: #777;
+}
+tr:nth-child(odd) td {
+    background-color: #DDD;
+}
+tr:hover td {
+    background-color: cyan;
+}
+td {
+    height: 40px;
 }
 body {
     background-color: CornflowerBlue;
     font-family: sans-serif;
-    margin-left: 170px;
+    margin-left: 150px;
 }
 .project-tile {
     display: grid;
@@ -65,14 +94,21 @@ body {
     margin: 0;
     padding: 0;
     border-bottom: 1px solid black;
+    height: 40px;
+    font-size: 16px;
+    text-align: center;
 }
 .tab {
+    flex: 1;
     cursor: pointer;
     padding: 10px;
+    font-weight: bold;
 }
 .tab.active {
-    background-color: #CCC
+    background-color: #AAA;
+    font-size: 18px;
 }
 .tab:hover {
-    background-color: #AAA;
+    background-color: #CCC;
+    font-size: 18px;
 }
