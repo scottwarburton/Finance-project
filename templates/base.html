@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <script type="application/javascript" src="{{  url_for('static', filename='script/script.js')  }}"></script>
+    <script type="application/javascript" src="{{  url_for('static', filename='script/script.js')  }}" defer></script>
     <title>Portfolio Analyser</title>
 </head>
 <body>
@@ -23,7 +23,17 @@
             <img id="image-css" class="logos" alt="css-logo" src="static/images/css-logo.png">
             <img id="image-html" class="logos" alt="html-logo" src="static/images/html-logo.png">
         </img-div>
+        <hr>
+        <section id="contact">
+            <h4>Contact me</h4>
+            <ul>
+                <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
+                <li>Email: xxx</li>
+            </ul>
+            <p>More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></p>
+        </section>
     </nav>
+
     {% block body %}{% endblock %}
 </body>
 </html>
