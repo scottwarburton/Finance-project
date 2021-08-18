@@ -35,15 +35,12 @@
                     </tr>
                 {% endfor %}
             </table>
-
             <br><br>
-
             <!-- Charts
             1) Pie chart of assets
             2) Column chart of P/L
             3) Portfolio value + P&L
             -->
-
             <h3 id="add-stocks">Add Stocks</h3>
             <form action="/" method="POST">
                 <label for="ticker">Ticker:</label>
@@ -57,8 +54,23 @@
 
                 <input type="submit" name="submit-add" value="Add Stock">
             </form>
+            <br><br>
+
+            <section id="projects">
+                <div class="project-div">
+                    <img class="wc-image" src="./static/images/watering-can.jpeg">
+                </div>
+                <h3 class="watering-can">Watering Can</h3>
+                <div class="slider"></div>
+            </section>
+            <script src="script/slider.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
         </div>
+
+
         <div id="tab2" data-tab-content>
             <h3>Check current stock price</h3>
             <p>"Example tickers: AAPL, AMZN, GOOG</p>
@@ -94,29 +106,17 @@
 
                 <input type="submit" name="submit-search" value="Search">
             </form>
-
             <!-- Charts
             1) P/E gauge
             2) Beta gauge
             3) 52wk - low current high
             -->
-
-
         </div>
+
+
         <div id="tab3" data-tab-content>
             <h3>Portfolio Analysis</h3>
-            <section id="projects">
-                <div class="proj1-div">
-                    <h4>Project 1</h4>
-                    <img class="project_1" src="./static/images/watering-can.jpeg">
-                </div>
-                <div class="proj2-div">
-                    <h4>Project 2</h4>
-                    <img class="project_2" src="./static/images/eco-cycle.jpg">
-                </div>
-            </section>
 
-            <div class="slider"></div>
 
 
         </div>
