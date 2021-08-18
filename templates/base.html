@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script type="application/javascript" src="{{  url_for('static', filename='script/script.js')  }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <title>Portfolio Analyser</title>
 </head>
 <body>
     <header id="main-header">
         <h1 id="main-h1">Portfolio Analyser</h1>
     </header>
-    <nav id=nav-bar>
-        <h3>Navigation</h3>
+
+    <nav id="nav-bar">
+        <h3>Languages & Frameworks</h3>
         <img-div>
             <img id="image-flask" class="logos" alt="flask-logo" src="static/images/flask-logo.png">
             <img id="image-python" class="logos" alt="python-logo" src="static/images/python-logo.png">
@@ -20,14 +24,10 @@
             <img id="image-css" class="logos" alt="css-logo" src="static/images/css-logo.png">
             <img id="image-html" class="logos" alt="html-logo" src="static/images/html-logo.png">
         </img-div>
+
         <hr>
         <section id="contact">
-            <h4>Contact me</h4>
-            <ul>
-                <li><a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github page</a></li>
-                <li>Email: xxx</li>
-            </ul>
-            <p>More information on <a target="_blank" id="tribute-link" href="https://en.wikipedia.org/wiki/Front-end_web_development">frontend development</a></p>
+            <h3>Contact me: <a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github</a> </h3>
         </section>
     </nav>
     {% block body %}{% endblock %}

@@ -2,15 +2,18 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://finance.yahoo.com/quote/AAPL"
+url = "https://finance.yahoo.com/quote/GOOG"
 headers = {'User-Agent': 'Mozilla/5.0'}
 response = requests.get(url, headers=headers)
 soup = BeautifulSoup(response.content, "lxml")
-beta = soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[1].find_all("td")[1].find("span").text
-mcap = soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[0].find_all("td")[1].find("span").text
-pe = soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[2].find_all("td")[1].find("span").text
-print(pe)
+range = soup.find("div", {"data-test": "left-summary-table"}).find("table").find("tbody").find_all("tr")[5].find_all("td")[
+        1].text
+low52 = float(range.split("-")[0].rstrip().replace(",", ""))
+high52 = float(range.split("-")[1].lstrip().replace(",", ""))
 
+print(range.split("-"))
+print(low52)
+print(high52)
 
 """
 table data
