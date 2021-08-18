@@ -33,14 +33,16 @@ nav {
     line-height: 20px;
     text-align: center;
 }
+/*
 .slider {
-    position: absolute;
+    position: relative;
     top: 200px;
     left: 200px;
     width: 10px;
     background: linear-gradient(to left, #ba7453, #d1a984);
     z-index: -1;
 }
+*/
 .project-div {
     display: grid;
     grid-template-columns: 10% 1fr 1fr 10%;
