@@ -41,10 +41,21 @@ nav {
     background: linear-gradient(to left, #ba7453, #d1a984);
     z-index: -1;
 }
-
-
-
-
+.project-div {
+    display: grid;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    min-height: 10vh;
+    color: white;
+    align-items: center;
+}
+.watering-can {
+    position: absolute;
+    top: 110%;
+    left: 20%;
+    color: white;
+    font-size: 30px;
+    transform: translate(-20%, -70%);
+}
 .logos {
     height: 60px;
     width: 80px;
