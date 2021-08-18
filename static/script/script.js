@@ -16,3 +16,9 @@ tabs.forEach(tab => {
         target.classList.add("active")
     })
 })
+/*
+const ele = document.getElementById;
+if(ele.addEventListener){
+    ele.addEventListener("submit", callback, false);
+}
+*/

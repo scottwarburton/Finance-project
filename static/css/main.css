@@ -33,6 +33,18 @@ nav {
     line-height: 20px;
     text-align: center;
 }
+.slider {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    width: 10px;
+    background: linear-gradient(to left, #ba7453, #d1a984);
+    z-index: -1;
+}
+
+
+
+
 .logos {
     height: 60px;
     width: 80px;
@@ -40,7 +52,7 @@ nav {
     opacity: 0.5;
     margin-left: 10px;
 }
-img:hover {
+.logos:hover {
     height: 80px;
     width: 100px;
     opacity: 1;
@@ -72,6 +84,7 @@ body {
     font-family: sans-serif;
     margin-left: 150px;
 }
+/*
 .project-tile {
     display: grid;
     grid-template-columns: repeat(auto-fit, minimax(100px, 1fr));
@@ -83,6 +96,7 @@ body {
     background: #CCC;
     margin-bottom: 10px;
 }
+*/
 [data-tab-content] {
     display: none;
 }

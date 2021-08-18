@@ -3,7 +3,7 @@
 {% block body %}
 
     <ul class="tabs">
-        <li data-tab-target="#tab1" class="active tab">Current Portfolio</li>
+        <li data-tab-target="#tab1" class="active tab">Portfolio Dashboard</li>
         <li data-tab-target="#tab2" class="tab">Stock Analysis</li>
         <li data-tab-target="#tab3" class="tab">Project Tiles</li>
     </ul>
@@ -38,6 +38,12 @@
 
             <br><br>
 
+            <!-- Charts
+            1) Pie chart of assets
+            2) Column chart of P/L
+            3) Portfolio value + P&L
+            -->
+
             <h3 id="add-stocks">Add Stocks</h3>
             <form action="/" method="POST">
                 <label for="ticker">Ticker:</label>
@@ -65,6 +71,8 @@
                     <th>Beta</th>
                     <th>MCap</th>
                     <th>P/E</th>
+                    <th>low52</th>
+                    <th>high52</th>
                 </tr>
                 {% for i in current %}
                 <tr>
@@ -74,6 +82,8 @@
                     <td>{{  i.beta  }}</td>
                     <td>{{  i.mcap  }}</td>
                     <td>{{  i.pe  }}</td>
+                    <td>{{  i.low52  }}</td>
+                    <td>{{  i.high52  }}</td>
                 </tr>
             {% endfor %}
             </table>
@@ -85,19 +95,29 @@
                 <input type="submit" name="submit-search" value="Search">
             </form>
 
+            <!-- Charts
+            1) P/E gauge
+            2) Beta gauge
+            3) 52wk - low current high
+            -->
+
+
         </div>
         <div id="tab3" data-tab-content>
             <h3>Portfolio Analysis</h3>
             <section id="projects">
-                <div class="project-tile" id="project_1">
+                <div class="proj1-div">
                     <h4>Project 1</h4>
-                    <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+                    <img class="project_1" src="./static/images/watering-can.jpeg">
                 </div>
-                <div class="project-tile" id="project_2">
+                <div class="proj2-div">
                     <h4>Project 2</h4>
-                    <a href="https://en.wikipedia.org/wiki/Front-end_web_development">link</a>
+                    <img class="project_2" src="./static/images/eco-cycle.jpg">
                 </div>
             </section>
+
+            <div class="slider"></div>
+
 
         </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

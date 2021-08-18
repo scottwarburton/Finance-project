@@ -29,7 +29,8 @@ class Current(db.Model):
     beta = db.Column(db.Numeric(9, 2))
     mcap = db.Column(db.String(10))
     pe = db.Column(db.Numeric(9, 2))
-
+    low52 = db.Column(db.Numeric(9, 2))
+    high52 = db.Column(db.Numeric(9, 2))
     def __repr__(self):
         return "<Current %r>" % self.id
 
@@ -52,7 +53,11 @@ def find_stock():
             "td")[1].find("span").text
         stock_pe = float(soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[2].find_all(
             "td")[1].find("span").text.replace(",",""))
-        return [stock_price, stock_daily_return, stock_beta, stock_mcap, stock_pe]
+        range = soup.find("div", {"data-test": "left-summary-table"}).find("table").find("tbody").find_all("tr")[5].find_all(
+            "td")[1].text
+        low52 = float(range.split("-")[0].rstrip().replace(",",""))
+        high52 = float(range.split("-")[1].lstrip().replace(",",""))
+        return [stock_price, stock_daily_return, stock_beta, stock_mcap, stock_pe, low52, high52]
 
 
 @app.route("/", methods=["POST", "GET"])
@@ -71,7 +76,8 @@ def index():
         elif request.form.get("submit-search"):
             stock_stats = find_stock()
             new_search = Current(ticker=request.form["ticker-search"], price=str(stock_stats[0]),
-                                 daily_return=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]), pe=str(stock_stats[4]))
+                                 daily_return=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]),
+                                 pe=str(stock_stats[4]), low52=str(stock_stats[5]), high52=str(stock_stats[6]))
             try:
                 db.session.add(new_search)
                 db.session.commit()
