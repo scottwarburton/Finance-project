@@ -1,6 +1,6 @@
 
 const pages = document.querySelectorAll(".page")
-const pageContents = document.querySelectorAll("[data-tab-content]")
+const pageContents = document.querySelectorAll("pageContent")
 
 pages.forEach(page => {
     page.addEventListener("click", () => {

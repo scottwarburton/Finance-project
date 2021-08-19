@@ -81,17 +81,17 @@ def dashboard():
             try:
                 db.session.add(new_search)
                 db.session.commit()
-                return redirect("/")
+                return redirect("/analysis")
             except:
                 return "Error searching stock"
     else:
         stocks = Stocks.query.all()
-        current = Current.query.order_by(Current.id.desc()).all()
-        return render_template("dashboard.html", stocks=stocks, current=current)
+        return render_template("dashboard.html", stocks=stocks)
 
 @app.route("/analysis")
 def analysis():
-    return render_template("analysis.html")
+    current = Current.query.order_by(Current.id.desc()).all()
+    return render_template("analysis.html", current=current)
 
 @app.route("/project")
 def project():
