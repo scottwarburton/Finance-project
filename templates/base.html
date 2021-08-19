@@ -29,9 +29,9 @@
     </nav>
 
     <ul class="pages">
-        <a class="page active" href="{{  url_for('dashboard')  }}"><li>Portfolio Dashboard</li></a>
-        <a class="page" href="{{  url_for('analysis')  }}"><li>Stock Analysis</li></a>
-        <a class="page" href="{{  url_for('project')  }}"><li>Project Tiles</li></a>
+        <div id="dashboard" class="page active"><a href="{{  url_for('dashboard')  }}"><li>Portfolio Dashboard</li></a></div>
+        <div id="analysis" class="page"><a href="{{  url_for('analysis')  }}"><li>Stock Analysis</li></a></div>
+        <div id="project" class="page"><a href="{{  url_for('project')  }}"><li>Project Tiles</li></a></div>
     </ul>
     {% block body %}{% endblock %}
 </body>

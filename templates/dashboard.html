@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<main class="pageContent active">
+<script>
+    document.getElementById("dashboard").classList.add("active");
+    document.getElementById("analysis").classList.remove("active");
+    document.getElementById("project").classList.remove("active");
+</script>
+
+
+<main class="pageContent">
     <h3>Current Portfolio</h3>
     <table>
         <tr>
@@ -19,20 +26,14 @@
                 <td>{{  stock.price  }}</td>
                 <td>{{  stock.total }}</td>
                 <td>{{  stock.date_added.date()  }}</td>
-                <td>
+                <td class="portfolioActions">
                     <a href="/delete/{{stock.id}}">Delete</a>
                     <br>
                     <a href="/update/{{stock.id}}">Update</a>
                 </td>
             </tr>
         {% endfor %}
-    </table>
-    <br><br>
-    <!-- Charts
-    1) Pie chart of assets
-    2) Column chart of P/L
-    3) Portfolio value + P&L
-    -->
+    </table><br><br>
 
     <h3>Add Stocks</h3>
     <form action="/" method="POST">
@@ -46,10 +47,16 @@
         <input type="text" name="price" id="price" required>
 
         <input type="submit" name="submit-add" value="Add Stock">
-    </form>
+    </form><br><br>
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <p>End</p>
+    <h3>Dashboard Graphs</h3>
+    <section id="dashboardGraphs" class="graph">
+        <!-- Charts
+        1) Pie chart of assets
+        2) Column chart of P/L
+        3) Portfolio value + P&L
+        -->
+    </section>
 
 </main>
 {% endblock %}

@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% block body %}
 
+<script>
+    document.getElementById("dashboard").classList.remove("active");
+    document.getElementById("analysis").classList.add("active");
+    document.getElementById("project").classList.remove("active");
+</script>
 <main class="pageContent">
     <h3>Check current stock price</h3>
-    <p>"Example tickers: AAPL, AMZN, GOOG</p><br><br>
+    <p>"Example tickers: AAPL, AMZN, GOOG</p><br>
 
     <table>
         <tr>
@@ -35,16 +40,16 @@
         <input type="text" name="ticker-search" id="ticker-search" required>
 
         <input type="submit" name="submit-search" value="Search">
-    </form>
+    </form><br><br>
 
-    <!-- Charts
-    1) P/E gauge
-    2) Beta gauge
-    3) 52wk - low current high
-    -->
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <p>End</p>
+    <h3>Analysis Graphs</h3><br>
+    <section id="analysisGraphs" class="graph">
+        <!-- Charts
+        1) P/E gauge
+        2) Beta gauge
+        3) 52wk - low current high
+        -->
+    </section>
 
 </main>
 {% endblock %}
