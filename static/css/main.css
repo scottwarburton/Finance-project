@@ -107,8 +107,10 @@ body {
     padding: 10px;
     font-weight: bold;
     border: 1px solid black;
-    text-decoration: none;
     cursor: pointer;
+}
+.page a {
+    text-decoration: none;
     color: black;
 }
 .page.active {
@@ -130,4 +132,18 @@ body {
 #profileLink {
     text-decoration: none;
     color: blue;
+}
+.portfolioActions a {
+    text-decoration: underline;
+    color: blue;
+}
+#contact a {
+    font-weight: normal;
+    text-decoration: underline;
+    color: blue;
+}
+.graph {
+    width: 1000px;
+    height: 400px;
+    background-color: #CCC;
 }
