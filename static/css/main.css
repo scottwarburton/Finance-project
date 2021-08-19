@@ -127,3 +127,7 @@ body {
         transform: translateY(0);
     }
 }
+#profileLink {
+    text-decoration: none;
+    color: blue;
+}
