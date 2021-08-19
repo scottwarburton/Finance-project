@@ -61,7 +61,7 @@ def find_stock():
 
 
 @app.route("/", methods=["POST", "GET"])
-def index():
+def dashboard():
     if request.method == "POST":
         if request.form.get("submit-add"):
             new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
@@ -87,8 +87,15 @@ def index():
     else:
         stocks = Stocks.query.all()
         current = Current.query.order_by(Current.id.desc()).all()
-        return render_template("index.html", stocks=stocks, current=current)
+        return render_template("dashboard.html", stocks=stocks, current=current)
 
+@app.route("/analysis")
+def analysis():
+    return render_template("analysis.html")
+
+@app.route("/project")
+def project():
+    return render_template("project.html")
 
 @app.route("/delete/<int:id>")
 def delete(id):

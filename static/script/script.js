@@ -1,24 +1,17 @@
 
+const pages = document.querySelectorAll(".page")
+const pageContents = document.querySelectorAll("[data-tab-content]")
 
-const tabs = document.querySelectorAll("[data-tab-target]")
-const tabContents = document.querySelectorAll("[data-tab-content]")
-
-tabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-        const target = document.querySelector(tab.dataset.tabTarget)
-        tabContents.forEach(tabContent => {
-            tabContent.classList.remove("active")
+pages.forEach(page => {
+    page.addEventListener("click", () => {
+        const target = document.querySelector(page.dataset.tabTarget)
+        pageContents.forEach(pageContent => {
+            pageContent.classList.remove("active")
         })
-        tabs.forEach(tab => {
-            tab.classList.remove("active")
+        pages.forEach(page => {
+            page.classList.remove("active")
         })
-        tab.classList.add("active")
+        page.classList.add("active")
         target.classList.add("active")
     })
 })
-/*
-const ele = document.getElementById;
-if(ele.addEventListener){
-    ele.addEventListener("submit", callback, false);
-}
-*/

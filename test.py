@@ -1,4 +1,4 @@
-
+"""
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,7 +15,7 @@ print(range.split("-"))
 print(low52)
 print(high52)
 
-"""
+
 table data
 <div class="D(ib) W(1/2) Bxz(bb) Pstart(12px) Va(t) ie-7_D(i) ie-7_Pos(a) smartphone_D(b) smartphone_W(100%) smartphone_Pstart(0px) smartphone_BdB smartphone_Bdc($seperatorColor)" data-test="right-summary-table">
     <table class="W(100%) M(0) Bdcl(c)">
