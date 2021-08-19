@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<main class="pageContent">
+    <h3>Check current stock price</h3>
+    <p>"Example tickers: AAPL, AMZN, GOOG</p><br><br>
+
+    <table>
+        <tr>
+            <th>Ticker</th>
+            <th>Price</th>
+            <th>Daily Return</th>
+            <th>Beta</th>
+            <th>MCap</th>
+            <th>P/E</th>
+            <th>low52</th>
+            <th>high52</th>
+        </tr>
+        {% for i in current %}
+        <tr>
+            <td>{{  i.ticker  }}</td>
+            <td>{{  i.price  }}</td>
+            <td>{{  i.daily_return  }}</td>
+            <td>{{  i.beta  }}</td>
+            <td>{{  i.mcap  }}</td>
+            <td>{{  i.pe  }}</td>
+            <td>{{  i.low52  }}</td>
+            <td>{{  i.high52  }}</td>
+        </tr>
+    {% endfor %}
+    </table><br><br>
+
+    <form action="/" method="POST">
+        <label for="ticker-search">Enter ticker: </label>
+        <input type="text" name="ticker-search" id="ticker-search" required>
+
+        <input type="submit" name="submit-search" value="Search">
+    </form>
+
+    <!-- Charts
+    1) P/E gauge
+    2) Beta gauge
+    3) 52wk - low current high
+    -->
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p>End</p>
+
+</main>
+{% endblock %}

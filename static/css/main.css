@@ -33,30 +33,20 @@ nav {
     line-height: 20px;
     text-align: center;
 }
-/*
 .slider {
     position: relative;
     top: 200px;
     left: 200px;
     width: 10px;
-    background: linear-gradient(to left, #ba7453, #d1a984);
+    background-color: red;
     z-index: -1;
 }
-*/
 .project-div {
     display: grid;
     grid-template-columns: 10% 1fr 1fr 10%;
     min-height: 10vh;
     color: white;
     align-items: center;
-}
-.watering-can {
-    position: absolute;
-    top: 110%;
-    left: 20%;
-    color: white;
-    font-size: 30px;
-    transform: translate(-20%, -70%);
 }
 .logos {
     height: 60px;
@@ -97,47 +87,43 @@ body {
     font-family: sans-serif;
     margin-left: 150px;
 }
-/*
-.project-tile {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minimax(100px, 1fr));
-    grid-gap: 10px;
-    padding: 50px 10px;
-    width: 100%;
-    max-width: 600px;
-    text-align: center;
-    background: #CCC;
-    margin-bottom: 10px;
-}
-*/
-[data-tab-content] {
-    display: none;
-}
-.active[data-tab-content] {
+.pageContent {
+    margin: 20px;
     display: block;
+    animation: smooth 500ms ease-in;
 }
-.tabs {
+.pages {
     display: flex;
     justify-content: space-around;
     list-style-type: none;
     margin: 0px;
     padding: 0px;
-    border-bottom: 1px solid black;
     height: 40px;
     font-size: 16px;
     text-align: center;
 }
-.tab {
+.page {
     flex: 1;
-    cursor: pointer;
     padding: 10px;
     font-weight: bold;
+    border: 1px solid black;
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
 }
-.tab.active {
+.page.active {
     background-color: #AAA;
     font-size: 18px;
 }
-.tab:hover {
+.page:hover {
     background-color: #CCC;
     font-size: 18px;
+}
+@keyframes smooth {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }

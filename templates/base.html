@@ -2,13 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!--
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <script type="application/javascript" src="{{  url_for('static', filename='script/script.js')  }}" defer></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha512-lJDBw/vKlGO8aIZB8/6CY4lV+EMAL3qzViHid6wXjH/uDrqUl+uvfCROHXAEL0T/bgdAQHSuE68vRlcFHUdrUw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" integrity="sha512-8Wy4KH0O+AuzjMm1w5QfZ5j5/y8Q/kcUktK9mPUVaUoBvh3QPUZB822W/vy7ULqri3yR8daH3F58+Y8Z08qzeg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Portfolio Analyser</title>
 </head>
 <body>
@@ -30,6 +27,12 @@
             <h3>Contact me: <a id="profile-link" href="https://github.com/scottwarburton" target="_blank">Github</a> </h3>
         </section>
     </nav>
+
+    <ul class="pages">
+        <a class="page active" href="{{  url_for('dashboard')  }}"><li>Portfolio Dashboard</li></a>
+        <a class="page" href="{{  url_for('analysis')  }}"><li>Stock Analysis</li></a>
+        <a class="page" href="{{  url_for('project')  }}"><li>Project Tiles</li></a>
+    </ul>
     {% block body %}{% endblock %}
 </body>
 </html>

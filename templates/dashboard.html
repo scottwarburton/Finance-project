@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<main class="pageContent active">
+    <h3>Current Portfolio</h3>
+    <table>
+        <tr>
+            <th>Ticker</th>
+            <th>Units</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th>Date Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for stock in stocks %}
+            <tr>
+                <td>{{  stock.ticker  }}</td>
+                <td>{{  stock.units  }}</td>
+                <td>{{  stock.price  }}</td>
+                <td>{{  stock.total }}</td>
+                <td>{{  stock.date_added.date()  }}</td>
+                <td>
+                    <a href="/delete/{{stock.id}}">Delete</a>
+                    <br>
+                    <a href="/update/{{stock.id}}">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br><br>
+    <!-- Charts
+    1) Pie chart of assets
+    2) Column chart of P/L
+    3) Portfolio value + P&L
+    -->
+
+    <h3>Add Stocks</h3>
+    <form action="/" method="POST">
+        <label for="ticker">Ticker:</label>
+        <input type="text" name="ticker" id="ticker" required>
+
+        <label for="units">Units:</label>
+        <input type="number" name="units" id="units" required>
+
+        <label for="price">Price:</label>
+        <input type="text" name="price" id="price" required>
+
+        <input type="submit" name="submit-add" value="Add Stock">
+    </form>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p>End</p>
+
+</main>
+{% endblock %}
