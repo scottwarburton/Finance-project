@@ -138,7 +138,8 @@ def img():
     plt.style.use("ggplot")
     plt.savefig(img)
     img.seek(0)
-    return send_file(img, mimetype='image/png', max_age=0)
+    #send_file(img, mimetype='image/png').headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    return send_file(img, mimetype='image/png')
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
