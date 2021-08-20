@@ -1,8 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import io
 import requests
 from bs4 import BeautifulSoup
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
@@ -63,35 +68,35 @@ def find_stock():
 @app.route("/", methods=["POST", "GET"])
 def dashboard():
     if request.method == "POST":
-        if request.form.get("submit-add"):
-            new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
-                               price=request.form["price"],
-                               total=(int(request.form["units"]) * float(request.form["price"])))
-            try:
-                db.session.add(new_stock)
-                db.session.commit()
-                return redirect("/")
-            except:
-                return "Error adding stock"
-        elif request.form.get("submit-search"):
-            stock_stats = find_stock()
-            new_search = Current(ticker=request.form["ticker-search"], price=str(stock_stats[0]),
-                                 daily_return=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]),
-                                 pe=str(stock_stats[4]), low52=str(stock_stats[5]), high52=str(stock_stats[6]))
-            try:
-                db.session.add(new_search)
-                db.session.commit()
-                return redirect("/analysis")
-            except:
-                return "Error searching stock"
+        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
+                       price=request.form["price"],
+                       total=(int(request.form["units"]) * float(request.form["price"])))
+        try:
+            db.session.add(new_stock)
+            db.session.commit()
+            return redirect("/")
+        except:
+            return "Error adding stock"
     else:
         stocks = Stocks.query.all()
         return render_template("dashboard.html", stocks=stocks)
 
-@app.route("/analysis")
+@app.route("/analysis", methods=["POST", "GET"])
 def analysis():
-    current = Current.query.order_by(Current.id.desc()).all()
-    return render_template("analysis.html", current=current)
+    if request.method == "POST":
+        stock_stats = find_stock()
+        new_search = Current(ticker=request.form["ticker-search"], price=str(stock_stats[0]),
+                             daily_return=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]),
+                             pe=str(stock_stats[4]), low52=str(stock_stats[5]), high52=str(stock_stats[6]))
+        try:
+            db.session.add(new_search)
+            db.session.commit()
+            return redirect("/analysis")
+        except:
+            return "Error searching stock"
+    else:
+        current = Current.query.order_by(Current.id.desc()).all()
+        return render_template("analysis.html", current=current)
 
 @app.route("/project")
 def project():
@@ -106,7 +111,6 @@ def delete(id):
         return redirect("/")
     except:
         return "Error deleting stock"
-
 
 @app.route("/update/<int:id>", methods=["POST", "GET"])
 def update(id):
@@ -123,6 +127,18 @@ def update(id):
     else:
         return render_template("update.html", stock=stock)
 
+@app.route("/img")
+def img():
+    img = io.BytesIO()
+    pieChartArray = [num[0] for num in Stocks.query.with_entities(Stocks.total).all()]
+    pieChartTickers = [num[0] for num in Stocks.query.with_entities(Stocks.ticker).all()]
+    pieChartExplode = [0.1 for x in pieChartArray]
+    plt.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
+    plt.title("Portfolio breakdown")
+    plt.style.use("ggplot")
+    plt.savefig(img)
+    img.seek(0)
+    return send_file(img, mimetype='image/png', max_age=0)
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
