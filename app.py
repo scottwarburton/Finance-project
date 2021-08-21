@@ -105,7 +105,12 @@ def dashboard():
     else:
         updatePL()
         stocks = Portfolio.query.all()
-        return render_template("dashboard.html", stocks=stocks)
+        portfolio_value = 0
+        portfolio_PL = 0
+        for stock in stocks:
+            portfolio_value += stock.curTotal
+            portfolio_PL += stock.pl
+        return render_template("dashboard.html", stocks=stocks, portfolioValue=portfolio_value, portfolioPL=portfolio_PL)
 
 @app.route("/analysis", methods=["POST", "GET"])
 def analysis():

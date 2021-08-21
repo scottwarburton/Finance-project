@@ -150,3 +150,11 @@ body {
 #g1 {
     z-index: 1;
 }
+#portfolioStats {
+    background-color: #AAA;
+    width: 400px;
+    height: 100px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2;
+}
