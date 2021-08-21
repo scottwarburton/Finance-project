@@ -4,7 +4,7 @@ from datetime import datetime
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import io
+from io import BytesIO
 import requests
 from bs4 import BeautifulSoup
 
@@ -127,19 +127,34 @@ def update(id):
     else:
         return render_template("update.html", stock=stock)
 
-@app.route("/img")
-def img():
-    img = io.BytesIO()
+@app.route("/pieBreakdown.png")
+def pieBreakdown():
+    plt.clf()
     pieChartArray = [num[0] for num in Stocks.query.with_entities(Stocks.total).all()]
     pieChartTickers = [num[0] for num in Stocks.query.with_entities(Stocks.ticker).all()]
-    pieChartExplode = [0.1 for x in pieChartArray]
+    pieChartExplode = [0.1 for _ in pieChartArray]
     plt.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
-    plt.title("Portfolio breakdown")
-    plt.style.use("ggplot")
+    return nocache(fig_response())
+
+def fig_response():
+    img = BytesIO()
     plt.savefig(img)
     img.seek(0)
-    #send_file(img, mimetype='image/png').headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     return send_file(img, mimetype='image/png')
+
+def nocache(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    return response
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
