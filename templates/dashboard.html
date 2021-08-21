@@ -14,8 +14,11 @@
         <tr>
             <th>Ticker</th>
             <th>Units</th>
-            <th>Price</th>
-            <th>Total</th>
+            <th>Purchase Price</th>
+            <th>Current Price</th>
+            <th>Purchase Total</th>
+            <th>Current Total</th>
+            <th>Profit/Loss</th>
             <th>Date Added</th>
             <th>Actions</th>
         </tr>
@@ -23,31 +26,17 @@
             <tr>
                 <td>{{  stock.ticker  }}</td>
                 <td>{{  stock.units  }}</td>
-                <td>{{  stock.price  }}</td>
-                <td>{{  stock.total }}</td>
+                <td>{{  stock.purPrice  }}</td>
+                <td>{{  stock.curPrice}}</td>
+                <td>{{  stock.purTotal }}</td>
+                <td>{{  stock.curTotal  }}</td>
+                <td>{{  stock.pl  }}</td>
                 <td>{{  stock.date_added.date()  }}</td>
-                <td class="portfolioActions">
-                    <a href="/delete/{{stock.id}}">Delete</a>
-                    <br>
-                    <a href="/update/{{stock.id}}">Update</a>
-                </td>
+                <td class="portfolioActions"><a href="/delete/{{stock.id}}">Remove</a></td>
             </tr>
         {% endfor %}
     </table><br><br>
 
-    <h3>Add Stocks</h3>
-    <form action="/" method="POST">
-        <label for="ticker">Ticker:</label>
-        <input type="text" name="ticker" id="ticker" required>
-
-        <label for="units">Units:</label>
-        <input type="number" name="units" id="units" required>
-
-        <label for="price">Price:</label>
-        <input type="text" name="price" id="price" required>
-
-        <input type="submit" name="submit-add" value="Add Stock">
-    </form><br><br>
 
     <h3>Dashboard Graphs</h3>
     <section id="dashboardGraphs" class="graph">
