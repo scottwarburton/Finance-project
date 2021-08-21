@@ -14,21 +14,25 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 db = SQLAlchemy(app)
 
 
-class Stocks(db.Model):
+class Portfolio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10), nullable=False)
     units = db.Column(db.Integer, nullable=False)
-    price = db.Column(db.Numeric(9, 2), nullable=False)
-    total = db.Column(db.Numeric(9, 2))
+    purPrice = db.Column(db.Numeric(9, 2), nullable=False)
+    curPrice = db.Column(db.Numeric(9, 2), nullable=False)
+    purTotal = db.Column(db.Numeric(9, 2), nullable=False)
+    curTotal = db.Column(db.Numeric(9, 2), nullable=False)
+    pl = db.Column(db.Numeric(9, 2), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return "<Stock %r>" % self.id
+        return "<Portfolio %r>" % self.id
 
 
-class Current(db.Model):
+class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10))
+    name = db.Column(db.String(10))
     price = db.Column(db.Numeric(9, 2))
     daily_return = db.Column(db.Numeric(9, 4))
     beta = db.Column(db.Numeric(9, 2))
@@ -37,7 +41,7 @@ class Current(db.Model):
     low52 = db.Column(db.Numeric(9, 2))
     high52 = db.Column(db.Numeric(9, 2))
     def __repr__(self):
-        return "<Current %r>" % self.id
+        return "<Stock %r>" % self.id
 
 
 def find_stock():
@@ -48,6 +52,8 @@ def find_stock():
         headers = {'User-Agent': 'Mozilla/5.0'}
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, "lxml")
+        stock_name = soup.find("div", {"class": "D(ib) Mt(-5px) Mend(20px) Maw(56%)--tab768 Maw(52%) Ov(h) smartphone_Maw(85%) smartphone_Mend(0px)"}).find_all(
+            "div")[0].find("h1").text
         stock_price = float(soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text.replace(",", ""))
         prev_price = float(soup.find("div", {"data-test": "left-summary-table"}).find("table").find("tbody").find_all("tr")[0].find_all("td")[
             1].text.replace(",",""))
@@ -62,15 +68,34 @@ def find_stock():
             "td")[1].text
         low52 = float(range.split("-")[0].rstrip().replace(",",""))
         high52 = float(range.split("-")[1].lstrip().replace(",",""))
-        return [stock_price, stock_daily_return, stock_beta, stock_mcap, stock_pe, low52, high52]
+        return [stock_name, stock_price, stock_daily_return, stock_beta, stock_mcap, stock_pe, low52, high52]
 
+def updatePL():
+    #get current stock price
+    stocks = Portfolio.query.all()
+    for stock in stocks:
+        """get current stock price"""
+        url = "https://finance.yahoo.com/quote/" + str(stock.ticker)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.content, "lxml")
+        stock_price = float(soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text.replace(",", ""))
+        """update curPrice, curTotal, PL in table"""
+        stock.curPrice = stock_price
+        stock.curTotal = stock.units * stock_price
+        stock.pl = float(stock.curTotal) - float(stock.purTotal)
+        db.session.commit()
 
 @app.route("/", methods=["POST", "GET"])
 def dashboard():
     if request.method == "POST":
-        new_stock = Stocks(ticker=request.form["ticker"], units=request.form["units"],
-                       price=request.form["price"],
-                       total=(int(request.form["units"]) * float(request.form["price"])))
+        ticker = Stock.query.order_by(Stock.id.desc()).first().ticker
+        price = Stock.query.order_by(Stock.id.desc()).first().price
+        units = request.form["units"]
+        new_stock = Portfolio(ticker=ticker, units=units,
+                              purPrice=price, curPrice=price,
+                              purTotal=(int(units) * float(price)),
+                              curTotal=(int(units) * float(price)), pl=0)
         try:
             db.session.add(new_stock)
             db.session.commit()
@@ -78,16 +103,17 @@ def dashboard():
         except:
             return "Error adding stock"
     else:
-        stocks = Stocks.query.all()
+        updatePL()
+        stocks = Portfolio.query.all()
         return render_template("dashboard.html", stocks=stocks)
 
 @app.route("/analysis", methods=["POST", "GET"])
 def analysis():
     if request.method == "POST":
         stock_stats = find_stock()
-        new_search = Current(ticker=request.form["ticker-search"], price=str(stock_stats[0]),
-                             daily_return=str(stock_stats[1]), beta=str(stock_stats[2]), mcap=str(stock_stats[3]),
-                             pe=str(stock_stats[4]), low52=str(stock_stats[5]), high52=str(stock_stats[6]))
+        new_search = Stock(ticker=request.form["ticker-search"], name=str(stock_stats[0]), price=str(stock_stats[1]),
+                           daily_return=str(stock_stats[2]), beta=str(stock_stats[3]), mcap=str(stock_stats[4]),
+                           pe=str(stock_stats[5]), low52=str(stock_stats[6]), high52=str(stock_stats[7]))
         try:
             db.session.add(new_search)
             db.session.commit()
@@ -95,7 +121,7 @@ def analysis():
         except:
             return "Error searching stock"
     else:
-        current = Current.query.order_by(Current.id.desc()).all()
+        current = Stock.query.order_by(Stock.id.desc()).first()
         return render_template("analysis.html", current=current)
 
 @app.route("/project")
@@ -104,7 +130,7 @@ def project():
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    stock_to_delete = Stocks.query.get_or_404(id)
+    stock_to_delete = Portfolio.query.get_or_404(id)
     try:
         db.session.delete(stock_to_delete)
         db.session.commit()
@@ -114,7 +140,7 @@ def delete(id):
 
 @app.route("/update/<int:id>", methods=["POST", "GET"])
 def update(id):
-    stock = Stocks.query.get_or_404(id)
+    stock = Portfolio.query.get_or_404(id)
     if request.method == "POST":
         stock.units = request.form["units"]
         stock.price = request.form["price"]
@@ -130,8 +156,8 @@ def update(id):
 @app.route("/pieBreakdown.png")
 def pieBreakdown():
     plt.clf()
-    pieChartArray = [num[0] for num in Stocks.query.with_entities(Stocks.total).all()]
-    pieChartTickers = [num[0] for num in Stocks.query.with_entities(Stocks.ticker).all()]
+    pieChartArray = [num[0] for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
+    pieChartTickers = [num[0] for num in Portfolio.query.with_entities(Portfolio.ticker).all()]
     pieChartExplode = [0.1 for _ in pieChartArray]
     plt.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
     return nocache(fig_response())
@@ -145,16 +171,6 @@ def fig_response():
 def nocache(response):
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
     return response
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)

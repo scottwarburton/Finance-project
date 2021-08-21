@@ -8,11 +8,17 @@
 </script>
 <main class="pageContent">
     <h3>Check current stock price</h3>
-    <p>"Example tickers: AAPL, AMZN, GOOG</p><br>
+    <form action="/analysis" method="POST">
+        <label for="ticker-search">Enter ticker: </label>
+        <input type="text" name="ticker-search" id="ticker-search" required>
+
+        <input type="submit" name="submit-search" value="Search">  (eg AAPL, AMZN, GOOG)
+    </form><br>
 
     <table>
         <tr>
             <th>Ticker</th>
+            <th>Name</th>
             <th>Price</th>
             <th>Daily Return</th>
             <th>Beta</th>
@@ -21,32 +27,36 @@
             <th>low52</th>
             <th>high52</th>
         </tr>
-        {% for i in current %}
+
         <tr>
-            <td>{{  i.ticker  }}</td>
-            <td>{{  i.price  }}</td>
-            <td>{{  i.daily_return  }}</td>
-            <td>{{  i.beta  }}</td>
-            <td>{{  i.mcap  }}</td>
-            <td>{{  i.pe  }}</td>
-            <td>{{  i.low52  }}</td>
-            <td>{{  i.high52  }}</td>
+            <td>{{  current.ticker  }}</td>
+            <td>{{  current.name  }}</td>
+            <td>{{  current.price  }}</td>
+            <td>{{  current.daily_return  }}</td>
+            <td>{{  current.beta  }}</td>
+            <td>{{  current.mcap  }}</td>
+            <td>{{  current.pe  }}</td>
+            <td>{{  current.low52  }}</td>
+            <td>{{  current.high52  }}</td>
         </tr>
-    {% endfor %}
+
     </table><br><br>
 
-    <form action="/analysis" method="POST">
-        <label for="ticker-search">Enter ticker: </label>
-        <input type="text" name="ticker-search" id="ticker-search" required>
+    <form action="/" method="POST">
 
-        <input type="submit" name="submit-search" value="Search">
+        <label for="units">Units:</label>
+        <input type="number" name="units" id="units" required>
+
+        <input type="submit" name="submit-add" value="Add To Portfolio">
     </form><br><br>
 
-    <h3>Analysis Graphs</h3><br>
+
+    <h3>Analysis Graphs</h3>
+    <h3>{{  current.name  }}</h3>
     <section id="analysisGraphs" class="graph">
         <!-- Charts
-        1) P/E gauge
-        2) Beta gauge
+        1) P/E gauge - find chart type
+        2) Beta gauge - find chart type
         3) 52wk - low current high
         -->
     </section>
