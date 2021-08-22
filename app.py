@@ -168,7 +168,7 @@ def pieBreakdown():
     pieChartExplode = [0.1 for _ in pieChartArray]
     fig, ax = plt.subplots()
     ax.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
-    return nocache(fig_response())
+    return nocache(fig_response(fig))
 
 @app.route("/barBreakdown.png")
 def barBreakdown():
@@ -178,11 +178,11 @@ def barBreakdown():
     #values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
     fig, ax = plt.subplots()
     ax.bar(labels, values)
-    return nocache(fig_response())
+    return nocache(fig_response(fig))
 
-def fig_response():
+def fig_response(fig):
     img = BytesIO()
-    plt.savefig('./static/images/img')
+    fig.savefig('./static/images/img')
     img.seek(0)
     return send_file(img, mimetype='image/png')
 
