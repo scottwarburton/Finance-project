@@ -159,3 +159,16 @@ body {
     text-align: center;
     line-height: 2;
 }
+#analysisGraphs {
+    width: 1200px;
+    height: 600px;
+    background-color: #AAA;
+    z-index: -1;
+    position: flex;
+}
+#g3 {
+    padding: 10px;
+}
+#g4 {
+    padding: 10px;
+}

@@ -190,8 +190,18 @@ def barBreakdown():
 def gaugePE():
     plt.clf()
     pe_level = Stock.query.order_by(Stock.id.desc()).first().pe
-    arrow_num = gauge_arrow(pe_level)
-    fig = gauge(arrow_num)
+    arrow_num = gauge_pe_arrow(pe_level)
+    labels = ['< 0', '0-5x', '5-10x', '10-15x', '15-20x', '20-25x', '> 25x']
+    fig = gauge(arrow_num, labels, 'P/E Gauge')
+    return nocache(fig_response(fig))
+
+@app.route("/gaugeBeta.png")
+def gaugeBeta():
+    plt.clf()
+    beta_level = Stock.query.order_by(Stock.id.desc()).first().beta
+    arrow_num = gauge_beta_arrow(beta_level)
+    labels = ['< -1', '-1-0x', '0-1x', '> 1x']
+    fig = gauge(arrow_num, labels, 'Beta Gauge')
     return nocache(fig_response(fig))
 
 def fig_response(fig):
@@ -205,12 +215,19 @@ def nocache(response):
     response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
     return response
 
-def gauge_arrow(pe_level):
+def gauge_pe_arrow(pe_level):
     pe_levels = [0, 5, 10, 15, 20, 25]
     for level in pe_levels:
         if pe_level < level:
             return pe_levels.index(level) + 1
     return 7
+
+def gauge_beta_arrow(beta_level):
+    beta_levels = [-1, 0, 1]
+    for level in beta_levels:
+        if beta_level < level:
+            return beta_levels.index(level) + 1
+    return 4
 
 def degree_range(n):
     start = np.linspace(0, 180, n + 1, endpoint=True)[0:-1]
@@ -222,10 +239,8 @@ def rot_text(ang):
     rotation = np.degrees(np.radians(ang) * np.pi / np.pi - np.radians(90))
     return rotation
 
-def gauge(arrow):
-    labels = ['< 0', '0-5x', '5-10x', '10-15x', '15-20x', '20-25x', '> 25x']
+def gauge(arrow, labels, title):
     colors = 'seismic_r'
-    title = 'P/E Ratio'
     N = len(labels)
     if isinstance(colors, str):
         cmap = cm.get_cmap(colors, N)
