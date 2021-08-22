@@ -143,10 +143,15 @@ body {
     color: blue;
 }
 .graph {
-    width: 1000px;
-    height: 400px;
-    background-color: #CCC;
+    width: 1200px;
+    height: 600px;
+    background-color: white;
+    z-index: -1
 }
-#g1 {
-    z-index: 1;
+#portfolioStats {
+    background-color: #AAA;
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2;
 }
