@@ -2,8 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, send_file
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('agg')
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 from io import BytesIO
 import requests
 from bs4 import BeautifulSoup
@@ -168,22 +169,25 @@ def pieBreakdown():
     pieChartExplode = [0.1 for _ in pieChartArray]
     fig, ax = plt.subplots()
     ax.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
+    plt.style.use("ggplot")
     return nocache(fig_response(fig))
 
 @app.route("/barBreakdown.png")
 def barBreakdown():
     plt.clf()
-    labels = [str(name[0]) for name in Portfolio.query.with_entities(Portfolio.name).all()]
-    values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.pl).all()]
-    #values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
+    labels = [str(name[0]) for name in Portfolio.query.with_entities(Portfolio.ticker).all()]
+    #values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.pl).all()]
+    values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
     fig, ax = plt.subplots()
     ax.bar(labels, values)
+    ax.set_xticklabels(labels, rotation=45)
     return nocache(fig_response(fig))
 
 def fig_response(fig):
     img = BytesIO()
-    fig.savefig('./static/images/img')
+    fig.savefig(img)
     img.seek(0)
+    plt.close(fig)
     return send_file(img, mimetype='image/png')
 
 def nocache(response):
