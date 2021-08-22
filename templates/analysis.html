@@ -4,7 +4,7 @@
 <script>
     document.getElementById("dashboard").classList.remove("active");
     document.getElementById("analysis").classList.add("active");
-    document.getElementById("project").classList.remove("active");
+    document.getElementById("market").classList.remove("active");
 </script>
 <main class="pageContent">
     <h3>Check current stock price</h3>
@@ -53,14 +53,12 @@
 
     <h3>Analysis Graphs</h3>
 
-    <section id="analysisGraphs" class="graph">
+    <section id="analysisGraphs">
         <h3 id="analysisGraphHeading">{{  current.name  }}</h3>
         <img id="g3" src="/gaugePE.png" height="400">
-        <!-- Charts
-        1) P/E gauge - find chart type
-        2) Beta gauge - find chart type
-        3) 52wk - low current high
-        -->
+        <img id="g4" src="/gaugeBeta.png" height="400">
+        <img id="g5" src="/highlow52.png">
+
 
     </section>
     <p>Credit: MPL gauge design by Nicolas Fauchereau</p>
