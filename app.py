@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, send_file
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import matplotlib
-matplotlib.use('agg')
+import matplotlib as mpl
+mpl.use('agg')
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from matplotlib import cm
@@ -135,9 +135,9 @@ def analysis():
         current = Stock.query.order_by(Stock.id.desc()).first()
         return render_template("analysis.html", current=current)
 
-@app.route("/project")
-def project():
-    return render_template("project.html")
+@app.route("/market")
+def market():
+    return render_template("market.html")
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -173,6 +173,7 @@ def pieBreakdown():
     fig, ax = plt.subplots()
     ax.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
     plt.style.use("ggplot")
+    fig.tight_layout()
     return nocache(fig_response(fig))
 
 @app.route("/barBreakdown.png")
@@ -184,6 +185,7 @@ def barBreakdown():
     fig, ax = plt.subplots()
     ax.bar(labels, values)
     ax.set_xticklabels(labels, rotation=45)
+    fig.tight_layout()
     return nocache(fig_response(fig))
 
 @app.route("/gaugePE.png")
@@ -202,6 +204,24 @@ def gaugeBeta():
     arrow_num = gauge_beta_arrow(beta_level)
     labels = ['< -1', '-1-0x', '0-1x', '> 1x']
     fig = gauge(arrow_num, labels, 'Beta Gauge')
+    return nocache(fig_response(fig))
+
+@app.route("/highlow52.png")
+def highlow52():
+    plt.clf()
+    fig = plt.figure(figsize=(8, 3))
+    ax = fig.add_axes([0.05, 0.8, 0.9, 0.15])
+    low = Stock.query.order_by(Stock.id.desc()).first().low52
+    high = Stock.query.order_by(Stock.id.desc()).first().high52
+    price = Stock.query.order_by(Stock.id.desc()).first().price
+    cmap = mpl.cm.seismic
+    norm = mpl.colors.Normalize(vmin=low, vmax=high)
+    cb = mpl.colorbar.ColorbarBase(ax, cmap=cmap, norm=norm, orientation='horizontal')
+    cb.ax.plot(price, 50, marker="o", markersize=33, mec="green", mfc="white", mew=5)
+    cb.ax.annotate("Price", (float(price) * 0.96, 40), color="black")
+    cb.ax.annotate("Low", [0, 100], color="black")
+    cb.ax.annotate("High", [100, 100], color="black")
+    cb.set_label('52wk High / Low', fontdict={'fontname': 'serif', 'fontsize': 22})
     return nocache(fig_response(fig))
 
 def fig_response(fig):

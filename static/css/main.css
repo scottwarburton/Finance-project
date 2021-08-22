@@ -161,8 +161,8 @@ body {
 }
 #analysisGraphs {
     width: 1200px;
-    height: 600px;
-    background-color: #AAA;
+    height: 1200px;
+    background-color: white;
     z-index: -1;
     position: flex;
 }
@@ -171,4 +171,11 @@ body {
 }
 #g4 {
     padding: 10px;
+}
+#indices {
+    background-color: #CCC;
+    width: 1200px;
+    height: 400px;
+    font-size: 20px;
+    line-height: 2;
 }
