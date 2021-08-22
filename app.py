@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 class Portfolio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10), nullable=False)
+    name = db.Column(db.String(20), nullable=False)
     units = db.Column(db.Integer, nullable=False)
     purPrice = db.Column(db.Numeric(9, 2), nullable=False)
     curPrice = db.Column(db.Numeric(9, 2), nullable=False)
@@ -32,7 +33,7 @@ class Portfolio(db.Model):
 class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ticker = db.Column(db.String(10))
-    name = db.Column(db.String(10))
+    name = db.Column(db.String(20))
     price = db.Column(db.Numeric(9, 2))
     daily_return = db.Column(db.Numeric(9, 4))
     beta = db.Column(db.Numeric(9, 2))
@@ -91,8 +92,9 @@ def dashboard():
     if request.method == "POST":
         ticker = Stock.query.order_by(Stock.id.desc()).first().ticker
         price = Stock.query.order_by(Stock.id.desc()).first().price
+        name = Stock.query.order_by(Stock.id.desc()).first().name
         units = request.form["units"]
-        new_stock = Portfolio(ticker=ticker, units=units,
+        new_stock = Portfolio(ticker=ticker, name=name, units=units,
                               purPrice=price, curPrice=price,
                               purTotal=(int(units) * float(price)),
                               curTotal=(int(units) * float(price)), pl=0)
@@ -164,12 +166,23 @@ def pieBreakdown():
     pieChartArray = [num[0] for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
     pieChartTickers = [num[0] for num in Portfolio.query.with_entities(Portfolio.ticker).all()]
     pieChartExplode = [0.1 for _ in pieChartArray]
-    plt.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
+    fig, ax = plt.subplots()
+    ax.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
+    return nocache(fig_response())
+
+@app.route("/barBreakdown.png")
+def barBreakdown():
+    plt.clf()
+    labels = [str(name[0]) for name in Portfolio.query.with_entities(Portfolio.name).all()]
+    values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.pl).all()]
+    #values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
+    fig, ax = plt.subplots()
+    ax.bar(labels, values)
     return nocache(fig_response())
 
 def fig_response():
     img = BytesIO()
-    plt.savefig(img)
+    plt.savefig('./static/images/img')
     img.seek(0)
     return send_file(img, mimetype='image/png')
 

@@ -13,6 +13,7 @@
     <table>
         <tr>
             <th>Ticker</th>
+            <th>Name</th>
             <th>Units</th>
             <th>Purchase Price</th>
             <th>Current Price</th>
@@ -25,6 +26,7 @@
         {% for stock in stocks %}
             <tr>
                 <td>{{  stock.ticker  }}</td>
+                <td>{{  stock.name  }}</td>
                 <td>{{  stock.units  }}</td>
                 <td>{{  stock.purPrice  }}</td>
                 <td>{{  stock.curPrice}}</td>
@@ -40,16 +42,14 @@
 
     <h3>Dashboard Graphs</h3>
     <section id="dashboardGraphs" class="graph">
-        <img id="g1" src="/pieBreakdown.png" height="300">
-
         <div id="portfolioStats">
             Portfolio Value: {{  portfolioValue  }}<br>
             Portfolio P&L: {{  portfolioPL  }}
         </div>
-        <!-- Charts
-        1) Column chart of P/L
-        2) Portfolio value + P&L
-        -->
+        <img id="g1" class="portfolioGraphs" src="/pieBreakdown.png" width="500">
+        <img id="g2" class="portfolioGraphs" src="/barBreakdown.png" width="500">
+        <br>
+
     </section>
 
 </main>
