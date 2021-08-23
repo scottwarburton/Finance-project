@@ -54,12 +54,12 @@
     <h3>Analysis Graphs</h3>
 
     <section id="analysisGraphs">
-        <h3 id="analysisGraphHeading">{{  current.name  }}</h3>
-        <img id="g3" src="/gaugePE.png" alt="P/E Gauge Chart" height="400">
-        <img id="g4" src="/gaugeBeta.png" alt="Beta Gauge Chart" height="400">
+        <div id="graphHeadingContainer"><h3 id="analysisGraphHeading">{{  current.name  }}</h3></div>
+        <div class="gaugeContainer">
+            <img id="g3" src="/gaugePE.png" alt="P/E Gauge Chart" height="400">
+            <img id="g4" src="/gaugeBeta.png" alt="Beta Gauge Chart" height="400">
+        </div>
         <div id="highlowbar"><img id="g5" src="/highlow52.png" alt="52wk High/Low Chart"></div>
-
-
     </section>
     <p>Credit: MPL gauge design by Nicolas Fauchereau</p>
 </main>
