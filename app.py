@@ -211,7 +211,7 @@ def barBreakdown():
     #values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.pl).all()]
     values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
     fig, ax = plt.subplots()
-    ax.bar(labels, values)
+    ax.bar(labels, values, color="blue")
     ax.set_xticklabels(labels, rotation=45)
     fig.tight_layout()
     return nocache(fig_response(fig))
