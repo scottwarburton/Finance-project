@@ -159,7 +159,7 @@ body {
     column-gap: 5px;
     background-color: #AAA;
     font-weight: bold;
-
+    line-height: 2;
 }
 .portfolioTotals {
     background-color: #CCC;

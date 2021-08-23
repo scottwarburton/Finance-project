@@ -8,6 +8,10 @@
 </script>
 <main class="pageContent">
     <h3>Market Update</h3>
+    <form action="/market", method="POST">
+        <label for="submit-refresh-market">Click to refresh: </label>
+        <input type="submit" id="submit-refresh-market" name="submit-refresh-market" value="Refresh Prices">
+    </form>
     <section id="indices">
         <table>
             <tr>
@@ -15,11 +19,11 @@
                 <th>Price</th>
                 <th>Daily return</th>
             </tr>
-            {% for _ in indices %}
+            {% for index in indices %}
             <tr>
-                <td>{{  indices[loop.index0][0]  }}</td>
-                <td>{{  indices[loop.index0][1]  }}</td>
-                <td>{{  indices[loop.index0][2]  }}</td>
+                <td>{{  index.name  }}</td>
+                <td>{{  index.price  }}</td>
+                <td>{{  index.daily_return  }}</td>
             </tr>
             {% endfor %}
         </table>
