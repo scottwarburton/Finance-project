@@ -24,18 +24,18 @@
             <th>Actions</th>
         </tr>
         {% for stock in stocks %}
-            <tr>
-                <td>{{  stock.ticker  }}</td>
-                <td>{{  stock.name  }}</td>
-                <td>{{  stock.units  }}</td>
-                <td>{{  stock.purPrice  }}</td>
-                <td>{{  stock.curPrice}}</td>
-                <td>{{  stock.purTotal }}</td>
-                <td>{{  stock.curTotal  }}</td>
-                <td>{{  stock.pl  }}</td>
-                <td>{{  stock.date_added.date()  }}</td>
-                <td class="portfolioActions"><a href="/delete/{{stock.id}}">Remove</a></td>
-            </tr>
+        <tr>
+            <td>{{  stock.ticker  }}</td>
+            <td>{{  stock.name  }}</td>
+            <td>{{  stock.units  }}</td>
+            <td>{{  stock.purPrice  }}</td>
+            <td>{{  stock.curPrice}}</td>
+            <td>{{  stock.purTotal }}</td>
+            <td>{{  stock.curTotal  }}</td>
+            <td>{{  stock.pl  }}</td>
+            <td>{{  stock.date_added.date()  }}</td>
+            <td class="portfolioActions"><a href="/delete/{{stock.id}}">Remove</a></td>
+        </tr>
         {% endfor %}
     </table><br><br>
 

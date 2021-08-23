@@ -39,7 +39,7 @@ class Stock(db.Model):
     ticker = db.Column(db.String(10))
     name = db.Column(db.String(20))
     price = db.Column(db.Numeric(9, 2))
-    daily_return = db.Column(db.Numeric(9, 4))
+    daily_return = db.Column(db.String(10))
     beta = db.Column(db.Numeric(9, 2))
     mcap = db.Column(db.String(10))
     pe = db.Column(db.Numeric(9, 2))
@@ -60,9 +60,7 @@ def find_stock():
         stock_name = soup.find("div", {"class": "D(ib) Mt(-5px) Mend(20px) Maw(56%)--tab768 Maw(52%) Ov(h) smartphone_Maw(85%) smartphone_Mend(0px)"}).find_all(
             "div")[0].find("h1").text
         stock_price = float(soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text.replace(",", ""))
-        prev_price = float(soup.find("div", {"data-test": "left-summary-table"}).find("table").find("tbody").find_all("tr")[0].find_all("td")[
-            1].text.replace(",",""))
-        stock_daily_return = stock_price / prev_price - 1
+        stock_daily_return = soup.find("span", {"class": "Trsdu(0.3s) Fw(500) Pstart(10px) Fz(24px) C($positiveColor)"}).text
         stock_beta = float(soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[1].find_all(
             "td")[1].find("span").text.replace(",",""))
         stock_mcap = soup.find("div", {"data-test": "right-summary-table"}).find("table").find("tbody").find_all("tr")[0].find_all(
@@ -90,6 +88,17 @@ def updatePL():
         stock.curTotal = stock.units * stock_price
         stock.pl = float(stock.curTotal) - float(stock.purTotal)
         db.session.commit()
+
+def market_index(ticker):
+    url = "https://finance.yahoo.com/quote/" + str(ticker)
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.content, "lxml")
+    index_name = soup.find("div", {"class": "D(ib) Mt(-5px) Mend(20px) Maw(56%)--tab768 Maw(52%) Ov(h) "
+                                            "smartphone_Maw(85%) smartphone_Mend(0px)"}).find_all("div")[0].find("h1").text
+    index_price = soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text
+    index_return = soup.find("span", {"class": "Trsdu(0.3s) Fw(500) Pstart(10px) Fz(24px) C($positiveColor)"}).text
+    return [index_name, index_price, index_return]
 
 @app.route("/", methods=["POST", "GET"])
 def dashboard():
@@ -137,7 +146,9 @@ def analysis():
 
 @app.route("/market")
 def market():
-    return render_template("market.html")
+    indices_list = ["^SPX", "^IXIC", "^FTSE", "^N225", "^HSI", "^AXJO"]
+    indices = [market_index(index) for index in indices_list]
+    return render_template("market.html", indices=indices)
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -217,8 +228,8 @@ def highlow52():
     cmap = mpl.cm.seismic
     norm = mpl.colors.Normalize(vmin=low, vmax=high)
     cb = mpl.colorbar.ColorbarBase(ax, cmap=cmap, norm=norm, orientation='horizontal')
-    cb.ax.plot(price, 50, marker="o", markersize=33, mec="green", mfc="white", mew=5)
-    cb.ax.annotate("Price", (float(price) * 0.96, 40), color="black")
+    cb.ax.plot(price, 50, marker="^", markersize=50, mec="green", mfc="white", mew=3)
+    cb.ax.annotate("Price", [float(price) * 0.96, 40], color="black")
     cb.ax.annotate("Low", [0, 100], color="black")
     cb.ax.annotate("High", [100, 100], color="black")
     cb.set_label('52wk High / Low', fontdict={'fontname': 'serif', 'fontsize': 22})
