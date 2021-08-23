@@ -12,7 +12,7 @@
     <h3>Current Portfolio</h3>
     <form action="/", method="POST">
         <label for="submit-refresh">Click to refresh: </label>
-        <input type="submit" name="submit-refresh" value="Refresh Prices">
+        <input type="submit" id="submit-refresh" name="submit-refresh" value="Refresh Prices">
     </form>
     <table>
         <tr>
@@ -20,8 +20,8 @@
             <th>Name</th>
             <th>Units</th>
             <th>Purchase Price</th>
-            <th>Current Price</th>
             <th>Purchase Total</th>
+            <th>Current Price</th>
             <th>Current Total</th>
             <th>Profit/Loss</th>
             <th>Date Added</th>
@@ -33,8 +33,8 @@
             <td>{{  stock.name  }}</td>
             <td>{{  stock.units  }}</td>
             <td>{{  stock.purPrice  }}</td>
-            <td>{{  stock.curPrice}}</td>
             <td>{{  stock.purTotal }}</td>
+            <td>{{  stock.curPrice}}</td>
             <td>{{  stock.curTotal  }}</td>
             <td>{{  stock.pl  }}</td>
             <td>{{  stock.date_added.date()  }}</td>
@@ -49,11 +49,11 @@
         <div id="portfolioStats">
             <div class="portfolioBox">
                 <div class="portfolioTotals">Portfolio Value:</div>
-                <div class="portfolioTotals">{{  portfolioValue  }}</div>
+                <div class="portfolioTotals">$ {{  portfolioValue  }}</div>
             </div><br>
             <div class="portfolioBox">
                 <div class="portfolioTotals">Portfolio P&L:</div>
-                <div class="portfolioTotals">{{  portfolioPL  }}</div>
+                <div class="portfolioTotals">$ {{  portfolioPL  }}</div>
             </div>
         </div>
         <img id="g2" class="portfolioGraphs" src="/barBreakdown.png" alt="Bar Chart" height="450">

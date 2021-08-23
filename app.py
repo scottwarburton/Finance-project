@@ -48,6 +48,14 @@ class Stock(db.Model):
     def __repr__(self):
         return "<Stock %r>" % self.id
 
+class Market(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    ticker = db.Column(db.String(10))
+    name = db.Column(db.String(20))
+    price = db.Column(db.Numeric(9, 2))
+    daily_return = db.Column(db.String(10))
+    def __repr__(self):
+        return "<Market %r>" % self.id
 
 def find_stock():
     url = "https://finance.yahoo.com/quote/" + str(request.form["ticker-search"])
@@ -89,20 +97,37 @@ def updatePL():
         stock.pl = float(stock.curTotal) - float(stock.purTotal)
         db.session.commit()
 
-def market_index(ticker):
-    url = "https://finance.yahoo.com/quote/" + str(ticker)
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.content, "lxml")
-    index_name = soup.find("div", {"class": "D(ib) Mt(-5px) Mend(20px) Maw(56%)--tab768 Maw(52%) Ov(h) "
-                                            "smartphone_Maw(85%) smartphone_Mend(0px)"}).find_all("div")[0].find("h1").text
-    index_price = soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text
-    index_return = soup.find("span", {"class": "Trsdu(0.3s) Fw(500) Pstart(10px) Fz(24px) C($positiveColor)"}).text
-    return [index_name, index_price, index_return]
+def market_index_update():
+    indices = Market.query.all()
+    for index in indices:
+        url = "https://finance.yahoo.com/quote/" + str(index.ticker)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.content, "lxml")
+        index.price = float(soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text.replace(",",""))
+        index.daily_return = soup.find("span", {"class": "Trsdu(0.3s) Fw(500) Pstart(10px) Fz(24px) C($positiveColor)"}).text
+        db.session.commit()
+
+def market_index_setup():
+    indices_list = ["^SPX", "^IXIC", "^FTSE", "^N225", "^HSI", "^AXJO"]
+    for index in indices_list:
+        url = "https://finance.yahoo.com/quote/" + str(index)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.content, "lxml")
+        index_name = soup.find("div", {"class": "D(ib) Mt(-5px) Mend(20px) Maw(56%)--tab768 Maw(52%) Ov(h) smartphone_Maw(85%) smartphone_Mend(0px)"}).find_all("div")[0].find("h1").text
+        index_price = float(soup.find("span", {"class": "Trsdu(0.3s) Fw(b) Fz(36px) Mb(-4px) D(ib)"}).text.replace(",",""))
+        index_return = soup.find("span", {"class": "Trsdu(0.3s) Fw(500) Pstart(10px) Fz(24px) C($positiveColor)"}).text
+        new_index = Market(ticker=index, name=index_name, price=index_price, daily_return=index_return)
+        try:
+            db.session.add(new_index)
+            db.session.commit()
+        except:
+            return "Error adding index"
 
 @app.route("/", methods=["POST", "GET"])
 def dashboard():
-    if request.method == "POST" and request.form["submit-add"] == "Add To Portfolio":
+    if (request.method == "POST") and (request.form["submit-add"] == "Add To Portfolio"):
         ticker = Stock.query.order_by(Stock.id.desc()).first().ticker
         price = Stock.query.order_by(Stock.id.desc()).first().price
         name = Stock.query.order_by(Stock.id.desc()).first().name
@@ -117,7 +142,7 @@ def dashboard():
             return redirect("/")
         except:
             return "Error adding stock"
-    elif request.method == "POST" and request.form["submit-refresh"] == "Refresh Prices":
+    elif (request.method == "POST") and (request.form["submit-refresh"] == "Refresh Prices"):
         updatePL()
         return redirect("/")
     else:
@@ -146,11 +171,16 @@ def analysis():
         current = Stock.query.order_by(Stock.id.desc()).first()
         return render_template("analysis.html", current=current)
 
-@app.route("/market")
+@app.route("/market", methods=["POST", "GET"])
 def market():
-    indices_list = ["^SPX", "^IXIC", "^FTSE", "^N225", "^HSI", "^AXJO"]
-    indices = [market_index(index) for index in indices_list]
-    return render_template("market.html", indices=indices)
+    if request.method == "POST":
+        market_index_update()
+    else:
+        indices = Market.query.all()
+        if len(indices) == 0:
+            market_index_setup()
+        indices = Market.query.all()
+        return render_template("market.html", indices=indices)
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -161,21 +191,6 @@ def delete(id):
         return redirect("/")
     except:
         return "Error deleting stock"
-
-@app.route("/update/<int:id>", methods=["POST", "GET"])
-def update(id):
-    stock = Portfolio.query.get_or_404(id)
-    if request.method == "POST":
-        stock.units = request.form["units"]
-        stock.price = request.form["price"]
-        stock.total = int(request.form["units"]) * float(request.form["price"])
-        try:
-            db.session.commit()
-            return redirect("/")
-        except:
-            return "Error updating stock"
-    else:
-        return render_template("update.html", stock=stock)
 
 @app.route("/pieBreakdown.png")
 def pieBreakdown():
