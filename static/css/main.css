@@ -166,13 +166,21 @@ body {
     height: 30px;
     text-align: center;
 }
+#graphHeadingContainer {
+    padding: 15px;
+    border: 15px;
+}
 #analysisGraphHeading {
+    border: 3px solid #AAA;
+    column-gap: 5px;
+    background-color: #CCC;
+    font-weight: bold;
+    line-height: 2;
     text-align: center;
-
 }
 #analysisGraphs {
     width: 1200px;
-    height: 800px;
+    height: 650px;
     background-color: white;
     z-index: -1;
     position: flex;
@@ -185,4 +193,14 @@ body {
 }
 #g5 {
     position: inline-block;
+}
+.gaugeContainer {
+    display: grid;
+    grid-template-columns: 500px 500px;
+    justify-content: space-evenly;
+}
+#highlowbar {
+    display: grid;
+    height: 100px;
+    justify-content: center;
 }
