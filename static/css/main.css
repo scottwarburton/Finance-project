@@ -161,7 +161,7 @@ body {
 }
 #analysisGraphs {
     width: 1200px;
-    height: 1200px;
+    height: 800px;
     background-color: white;
     z-index: -1;
     position: flex;
