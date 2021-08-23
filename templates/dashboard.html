@@ -10,6 +10,10 @@
 
 <main class="pageContent">
     <h3>Current Portfolio</h3>
+    <form action="/", method="POST">
+        <label for="submit-refresh">Click to refresh: </label>
+        <input type="submit" name="submit-refresh" value="Refresh Prices">
+    </form>
     <table>
         <tr>
             <th>Ticker</th>
@@ -43,8 +47,14 @@
     <h3>Dashboard Graphs</h3>
     <section id="dashboardGraphs" class="graph">
         <div id="portfolioStats">
-            Portfolio Value: {{  portfolioValue  }}<br>
-            Portfolio P&L: {{  portfolioPL  }}
+            <div class="portfolioBox">
+                <div class="portfolioTotals">Portfolio Value:</div>
+                <div class="portfolioTotals">{{  portfolioValue  }}</div>
+            </div><br>
+            <div class="portfolioBox">
+                <div class="portfolioTotals">Portfolio P&L:</div>
+                <div class="portfolioTotals">{{  portfolioPL  }}</div>
+            </div>
         </div>
         <img id="g2" class="portfolioGraphs" src="/barBreakdown.png" alt="Bar Chart" height="450">
         <img id="g1" class="portfolioGraphs" src="/pieBreakdown.png" alt="Pie Chart" height="400">

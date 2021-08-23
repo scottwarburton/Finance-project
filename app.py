@@ -102,7 +102,7 @@ def market_index(ticker):
 
 @app.route("/", methods=["POST", "GET"])
 def dashboard():
-    if request.method == "POST":
+    if request.method == "POST" and request.form["submit-add"] == "Add To Portfolio":
         ticker = Stock.query.order_by(Stock.id.desc()).first().ticker
         price = Stock.query.order_by(Stock.id.desc()).first().price
         name = Stock.query.order_by(Stock.id.desc()).first().name
@@ -117,8 +117,10 @@ def dashboard():
             return redirect("/")
         except:
             return "Error adding stock"
-    else:
+    elif request.method == "POST" and request.form["submit-refresh"] == "Refresh Prices":
         updatePL()
+        return redirect("/")
+    else:
         stocks = Portfolio.query.all()
         portfolio_value = 0
         portfolio_PL = 0

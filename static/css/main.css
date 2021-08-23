@@ -149,15 +149,26 @@ body {
     z-index: -1
 }
 #portfolioStats {
+    padding: 30px;
+    border: 30px;
+}
+.portfolioBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 3px solid #AAA;
+    column-gap: 5px;
     background-color: #AAA;
-    width: 100%;
     font-weight: bold;
+
+}
+.portfolioTotals {
+    background-color: #CCC;
+    height: 30px;
     text-align: center;
-    line-height: 2;
 }
 #analysisGraphHeading {
     text-align: center;
-    line-height: 2;
+
 }
 #analysisGraphs {
     width: 1200px;
