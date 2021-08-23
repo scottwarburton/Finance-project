@@ -172,10 +172,6 @@ body {
 #g4 {
     padding: 10px;
 }
-#indices {
-    background-color: #CCC;
-    width: 1200px;
-    height: 400px;
-    font-size: 20px;
-    line-height: 2;
+#g5 {
+    position: inline-block;
 }

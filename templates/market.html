@@ -9,21 +9,21 @@
 <main class="pageContent">
     <h3>Market Update</h3>
     <section id="indices">
-        <ul>
-            <li>S&P 500: </li>
-            <li>NASDAQ: </li>
-            <li>FTSE 250: </li>
-            <li>Nikkei 225: </li>
-            <li>Hang Seng: </li>
-            <li>ASX 200: </li>
-
-        </ul>
+        <table>
+            <tr>
+                <th>Index</th>
+                <th>Price</th>
+                <th>Daily return</th>
+            </tr>
+            {% for _ in indices %}
+            <tr>
+                <td>{{  indices[loop.index0][0]  }}</td>
+                <td>{{  indices[loop.index0][1]  }}</td>
+                <td>{{  indices[loop.index0][2]  }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </section>
-    <div class="project-div">
-        <img class="wc-image" src="./static/images/watering-can.jpeg">
-    </div>
-    <div class="slider"></div>
-    <script src="./static/script/slider.js" defer></script>
 
 
 </main>
