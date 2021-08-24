@@ -180,19 +180,22 @@ body {
 }
 #analysisGraphs {
     width: 1200px;
-    height: 650px;
+    height: 850px;
     background-color: white;
     z-index: -1;
     position: flex;
 }
 #g3 {
     padding: 10px;
+    border: 3px solid #AAA;
 }
 #g4 {
     padding: 10px;
+    border: 3px solid #AAA;
 }
 #g5 {
     position: inline-block;
+    border: 3px solid #AAA;
 }
 .gaugeContainer {
     display: grid;
