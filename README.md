@@ -5,7 +5,7 @@ https://flaskprojectsw.herokuapp.com
 
 Finance project - Flask, python, SQL, javascript
 Stock portfolio analyser
-
+ 
 Analyse
 enter ticker to analyse 
 request current data from yahoo finance
