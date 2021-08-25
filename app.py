@@ -6,6 +6,7 @@ mpl.use('agg')
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 from matplotlib import cm
+import matplotlib.transforms as transforms
 import numpy as np
 from matplotlib.patches import Circle, Wedge, Rectangle
 from io import BytesIO
@@ -240,9 +241,9 @@ def highlow52():
     plt.clf()
     fig = plt.figure(figsize=(8, 3))
     ax = fig.add_axes([0, 0, 0.9, 0.15])
-    low = Stock.query.order_by(Stock.id.desc()).first().low52
-    high = Stock.query.order_by(Stock.id.desc()).first().high52
-    price = Stock.query.order_by(Stock.id.desc()).first().price
+    low = float(Stock.query.order_by(Stock.id.desc()).first().low52)
+    high = float(Stock.query.order_by(Stock.id.desc()).first().high52)
+    price = float(Stock.query.order_by(Stock.id.desc()).first().price)
     cmap = mpl.cm.seismic
     norm = mpl.colors.Normalize(vmin=low, vmax=high)
     cb = mpl.colorbar.ColorbarBase(ax, cmap=cmap, norm=norm, orientation='horizontal')
@@ -253,8 +254,9 @@ def highlow52():
     ax.text(1.09, 2.45, "Highest Price", ha="center", va="center", color="w", rotation=45, size=15,
             transform=ax.transAxes, bbox=bbox_props)
     bbox_props = dict(boxstyle="larrow,pad=0.3", fc="green", lw=2)
-    ax.text(price, (low + high) * 0.665, "Current Price", ha="center", va="center", color="w", rotation=90, size=15,
-            bbox=bbox_props)
+    trans = transforms.blended_transform_factory(ax.transData, ax.transAxes)
+    ax.text(price, 2.25, "Current Price", ha="center", va="center", color="w", rotation=90, size=15,
+            transform=trans, bbox=bbox_props)
     cb.set_label('52wk Price Range', fontdict={'fontname': 'serif', 'fontsize': 22})
     return nocache(fig_response(fig))
 
