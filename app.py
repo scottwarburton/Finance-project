@@ -239,23 +239,28 @@ def gaugeBeta():
 def highlow52():
     plt.clf()
     fig = plt.figure(figsize=(8, 3))
-    ax = fig.add_axes([0.05, 0.8, 0.9, 0.15])
+    ax = fig.add_axes([0, 0, 0.9, 0.15])
     low = Stock.query.order_by(Stock.id.desc()).first().low52
     high = Stock.query.order_by(Stock.id.desc()).first().high52
     price = Stock.query.order_by(Stock.id.desc()).first().price
     cmap = mpl.cm.seismic
     norm = mpl.colors.Normalize(vmin=low, vmax=high)
     cb = mpl.colorbar.ColorbarBase(ax, cmap=cmap, norm=norm, orientation='horizontal')
-    cb.ax.plot(price, 50, marker="^", markersize=50, mec="green", mfc="white", mew=3)
-    cb.ax.annotate("Price", [float(price) * 0.96, 40], color="black")
-    cb.ax.annotate("Low", [0, 100], color="black")
-    cb.ax.annotate("High", [100, 100], color="black")
-    cb.set_label('52wk High / Low', fontdict={'fontname': 'serif', 'fontsize': 22})
+    bbox_props = dict(boxstyle="rarrow,pad=0.3", fc="blue", lw=2)
+    ax.text(-0.085, 2.45, "Lowest Price", ha="center", va="center", color="w", rotation=315, size=15,
+            transform=ax.transAxes, bbox=bbox_props)
+    bbox_props = dict(boxstyle="larrow,pad=0.3", fc="red", lw=2)
+    ax.text(1.09, 2.45, "Highest Price", ha="center", va="center", color="w", rotation=45, size=15,
+            transform=ax.transAxes, bbox=bbox_props)
+    bbox_props = dict(boxstyle="larrow,pad=0.3", fc="green", lw=2)
+    ax.text(price, (low + high) * 0.665, "Current Price", ha="center", va="center", color="w", rotation=90, size=15,
+            bbox=bbox_props)
+    cb.set_label('52wk Price Range', fontdict={'fontname': 'serif', 'fontsize': 22})
     return nocache(fig_response(fig))
 
 def fig_response(fig):
     img = BytesIO()
-    fig.savefig(img)
+    fig.savefig(img, bbox_inches="tight")
     img.seek(0)
     plt.close(fig)
     return send_file(img, mimetype='image/png')
