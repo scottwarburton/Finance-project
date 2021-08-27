@@ -7,12 +7,14 @@
     document.getElementById("market").classList.add("active");
 </script>
 <main class="pageContent">
-    <h3>Market Update</h3>
-    <form action="/market", method="POST">
-        <label for="submit-refresh-market">Click to refresh: </label>
-        <input type="submit" id="submit-refresh-market" name="submit-refresh-market" value="Refresh Prices">
-    </form>
-    <section id="indices">
+    <div class="refresh">
+        <h2 class="pageHeading">Market Update</h3>
+        <form action="/market", method="POST">
+            <label for="submit-refresh-market"></label>
+            <input type="submit" class="submit" id="submit-refresh-market" name="submit-refresh-market" value="Click To Refresh Prices">
+        </form>
+    </div>
+    <div id="indices" class="tableContainer">
         <table>
             <tr>
                 <th>Index</th>
@@ -27,7 +29,7 @@
             </tr>
             {% endfor %}
         </table>
-    </section>
+    </div>
 
 
 </main>

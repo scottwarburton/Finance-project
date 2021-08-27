@@ -7,12 +7,12 @@
     document.getElementById("market").classList.remove("active");
 </script>
 <main class="pageContent">
-    <h3>Check current stock price</h3>
+    <h2 class="pageHeading">Check current stock price</h2>
     <form action="/analysis" method="POST">
         <label for="ticker-search">Enter ticker: </label>
-        <input type="text" name="ticker-search" id="ticker-search" required>
+        <input type="text" class="input" name="ticker-search" id="ticker-search" required>
 
-        <input type="submit" name="submit-search" value="Search">  (eg AAPL, AMZN, GOOG)
+        <input type="submit" class="submit" name="submit-search" value="Search">  (eg AAPL, AMZN, GOOG)
     </form><br>
 
     <table>
@@ -24,8 +24,8 @@
             <th>Beta</th>
             <th>MCap</th>
             <th>P/E</th>
-            <th>low52</th>
-            <th>high52</th>
+            <th>52Wk Low</th>
+            <th>52Wk Low</th>
         </tr>
 
         <tr>
@@ -40,25 +40,23 @@
             <td>{{  current.high52  }}</td>
         </tr>
 
-    </table><br><br>
+    </table>
+    <br>
 
     <form action="/" method="POST">
 
         <label for="units">Units:</label>
-        <input type="number" name="units" id="units" required>
+        <input type="number" class="input" name="units" id="units" required>
 
-        <input type="submit" name="submit" value="Add To Portfolio">
-    </form><br><br>
-
-
-    <h3>Analysis Graphs</h3>
+        <input type="submit" class="submit" name="submit" value="Add To Portfolio">
+    </form>
 
     <section id="analysisGraphs">
         <div id="graphHeadingContainer"><h3 id="analysisGraphHeading">{{  current.name  }}</h3></div>
         <div class="gaugeContainer">
             <img id="g3" src="/gaugePE.png" alt="P/E Gauge Chart" height="400">
             <img id="g4" src="/gaugeBeta.png" alt="Beta Gauge Chart" height="400">
-        </div>
+        </div><br>
         <div id="highlowbar"><img id="g5" src="/highlow52.png" alt="52wk High/Low Chart"></div>
     </section>
     <p>Credit: MPL gauge design by Nicolas Fauchereau</p>

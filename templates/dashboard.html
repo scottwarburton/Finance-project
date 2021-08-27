@@ -9,55 +9,59 @@
 
 
 <main class="pageContent">
-    <h3>Current Portfolio</h3>
-    <form action="/", method="POST">
-        <label for="submit-refresh">Click to refresh: </label>
-        <input type="submit" id="submit-refresh" name="submit" value="Refresh Prices">
-    </form>
-    <table>
-        <tr>
-            <th>Ticker</th>
-            <th>Name</th>
-            <th>Units</th>
-            <th>Purchase Price</th>
-            <th>Purchase Total</th>
-            <th>Current Price</th>
-            <th>Current Total</th>
-            <th>Profit/Loss</th>
-            <th>Date Added</th>
-            <th>Actions</th>
-        </tr>
-        {% for stock in stocks %}
-        <tr>
-            <td>{{  stock.ticker  }}</td>
-            <td>{{  stock.name  }}</td>
-            <td>{{  stock.units  }}</td>
-            <td>{{  stock.purPrice  }}</td>
-            <td>{{  stock.purTotal }}</td>
-            <td>{{  stock.curPrice}}</td>
-            <td>{{  stock.curTotal  }}</td>
-            <td>{{  stock.pl  }}</td>
-            <td>{{  stock.date_added.date()  }}</td>
-            <td class="portfolioActions"><a href="/delete/{{stock.id}}">Remove</a></td>
-        </tr>
-        {% endfor %}
-    </table><br><br>
+    <div class="refresh">
+        <h2 class="pageHeading">Current Portfolio</h2>
+        <form action="/", method="POST">
+            <label for="submit-refresh"></label>
+            <input type="submit" class="submit" id="submit-refresh" name="submit" value="Click To Refresh Prices">
+        </form>
+    </div>
+    <div class="tableContainer">
+        <table>
+            <tr>
+                <th>Ticker</th>
+                <th>Name</th>
+                <th>Units</th>
+                <th>Purchase Price</th>
+                <th>Purchase Total</th>
+                <th>Current Price</th>
+                <th>Current Total</th>
+                <th>Profit/Loss</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            {% for stock in stocks %}
+            <tr>
+                <td>{{  stock.ticker  }}</td>
+                <td>{{  stock.name  }}</td>
+                <td>{{  stock.units  }}</td>
+                <td>{{  stock.purPrice  }}</td>
+                <td>{{  stock.purTotal }}</td>
+                <td>{{  stock.curPrice}}</td>
+                <td>{{  stock.curTotal  }}</td>
+                <td>{{  stock.pl  }}</td>
+                <td>{{  stock.date_added.date()  }}</td>
+                <td class="portfolioActions"><a href="/delete/{{stock.id}}">Remove</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
-
-    <h3>Dashboard Graphs</h3>
-    <section id="dashboardGraphs" class="graph">
+    <section id="dashboardGraphs">
         <div id="portfolioStats">
             <div class="portfolioBox">
-                <div class="portfolioTotals">Portfolio Value:</div>
-                <div class="portfolioTotals">$ {{  portfolioValue  }}</div>
-            </div><br>
+                <div class="portfolioTotalHeading">Portfolio Value:</div>
+                <div class="portfolioTotal">$ {{  portfolioValue  }}</div>
+            </div>
             <div class="portfolioBox">
-                <div class="portfolioTotals">Portfolio P&L:</div>
-                <div class="portfolioTotals">$ {{  portfolioPL  }}</div>
+                <div class="portfolioTotalHeading">Portfolio Profit/Loss:</div>
+                <div class="portfolioTotal">$ {{  portfolioPL  }}</div>
             </div>
         </div>
-        <img id="g2" class="portfolioGraphs" src="/barBreakdown.png" alt="Bar Chart" height="450">
-        <img id="g1" class="portfolioGraphs" src="/pieBreakdown.png" alt="Pie Chart" height="400">
+        <div class="chartContainer">
+            <img id="g1" class="portfolioGraphs" src="/pieBreakdown.png" alt="Pie Chart", height="400">
+            <img id="g2" class="portfolioGraphs" src="/barBreakdown.png" alt="Bar Chart", height="400">
+        </div>
         <br>
     </section>
 
