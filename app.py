@@ -202,6 +202,7 @@ def pieBreakdown():
     pieChartExplode = [0.1 for _ in pieChartArray]
     fig, ax = plt.subplots()
     ax.pie(pieChartArray, labels=pieChartTickers, autopct="%.2f%%", pctdistance=0.8, explode=pieChartExplode)
+    ax.set_xlabel("Portfolio Breakdown", fontdict={'fontname': 'serif', 'fontsize': 18, 'fontweight': 'bold'})
     plt.style.use("ggplot")
     fig.tight_layout()
     return nocache(fig_response(fig))
@@ -214,6 +215,7 @@ def barBreakdown():
     #values = [float(num[0]) for num in Portfolio.query.with_entities(Portfolio.curTotal).all()]
     fig, ax = plt.subplots()
     ax.bar(labels, values, color="blue")
+    ax.set_xlabel("Profit/Loss Breakdown", fontdict={'fontname': 'serif', 'fontsize': 18, 'fontweight': 'bold'})
     ax.set_xticklabels(labels, rotation=45)
     fig.tight_layout()
     return nocache(fig_response(fig))
@@ -257,7 +259,7 @@ def highlow52():
     trans = transforms.blended_transform_factory(ax.transData, ax.transAxes)
     ax.text(price, 2.25, "Current Price", ha="center", va="center", color="w", rotation=90, size=15,
             transform=trans, bbox=bbox_props)
-    cb.set_label('52wk Price Range', fontdict={'fontname': 'serif', 'fontsize': 22})
+    cb.set_label('52wk Price Range', fontdict={'fontname': 'serif', 'fontsize': 18, 'fontweight': 'bold'})
     return nocache(fig_response(fig))
 
 def fig_response(fig):
@@ -323,7 +325,7 @@ def gauge(arrow, labels, title):
     r = Rectangle((-0.4, -0.1), 0.8, 0.1, facecolor='w', lw=2)
     ax.add_patch(r)
     ax.text(0, -0.05, title, horizontalalignment='center', \
-            verticalalignment='center', fontsize=22, fontweight='bold', fontname='serif')
+            verticalalignment='center', fontsize=18, fontweight='bold', fontname='serif')
     pos = mid_points[abs(arrow - N)]
     ax.arrow(0, 0, 0.225 * np.cos(np.radians(pos)), 0.225 * np.sin(np.radians(pos)), \
              width=0.04, head_width=0.09, head_length=0.1, fc='k', ec='k')

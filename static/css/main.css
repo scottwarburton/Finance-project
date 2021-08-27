@@ -5,21 +5,33 @@ h1, body {
     margin: 0px;
     padding: 0px;
 }
-h1 {
-    color: #CCC;
+#main-h1 {
+    color: black;
     font-weight: normal;
-    font-size: 50px;
+    font-size: 40px;
+    font-family: "Jazz LET";
     text-align: center;
-    line-height: 200px;
+    text-transform: uppercase;
+}
+#main-h1-style {
+    display: grid;
+    height: 60px;
+    grid-template-columns: 1fr max-content 1fr;
+    align-items: center;
+    background-color: #CCC;
+}
+#main-h1-style:after, #main-h1-style:before {
+    content: " ";
+    display: block;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    height: 5px;
 }
 #main-header {
-    background-image: url("../images/header.jpeg");
+    background-image: url("../images/header1.jpg");
     background-size: 100% 100%;
     height: 200px;
     opacity: 0.8;
-}
-.tab-content {
-    margin: 20px;
 }
 nav {
     position: fixed;
@@ -32,21 +44,6 @@ nav {
     font-size: 14px;
     line-height: 20px;
     text-align: center;
-}
-.slider {
-    position: relative;
-    top: 200px;
-    left: 200px;
-    width: 10px;
-    background-color: red;
-    z-index: -1;
-}
-.project-div {
-    display: grid;
-    grid-template-columns: 10% 1fr 1fr 10%;
-    min-height: 10vh;
-    color: white;
-    align-items: center;
 }
 .logos {
     height: 60px;
@@ -83,14 +80,48 @@ td {
     height: 40px;
 }
 body {
-    background-color: CornflowerBlue;
     font-family: sans-serif;
     margin-left: 150px;
 }
 .pageContent {
-    margin: 20px;
-    display: block;
+    display: grid;
+    opacity: 0.8;
     animation: smooth 500ms ease-in;
+    justify-content: center;
+}
+.submit {
+    background-color: #AAA;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px #999;
+    color: blue;
+    font-size: 15px;
+}
+.submit:hover {
+    background-color: #AAA;
+}
+.submit:active {
+    background-color: #AAA;
+    box-shadow: 0 5px #999;
+    transform: translateY(4px);
+}
+.refresh {
+    padding-top: 10px;
+    display: flex;
+    width: 1200px;
+    justify-content: space-between;
+}
+.input {
+    border: 1px solid #AAA;
+    width: 150px;
+    height: 20px;
+}
+.pageHeading {
+    font-family: "Jazz LET";
 }
 .pages {
     display: flex;
@@ -100,7 +131,12 @@ body {
     padding: 0px;
     height: 40px;
     font-size: 16px;
+    font-family: "Jazz LET";
     text-align: center;
+    background-color: #CCC;
+}
+#pageBackground {
+    background-color: white;
 }
 .page {
     flex: 1;
@@ -142,28 +178,37 @@ body {
     text-decoration: underline;
     color: blue;
 }
-.graph {
+.tableContainer {
+    display: flex;
+    justify-content: center;
+}
+#dashboardGraphs {
     width: 1200px;
     height: 600px;
-    background-color: white;
+    background-color: ;
     z-index: -1
 }
 #portfolioStats {
     padding: 30px;
-    border: 30px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
 }
 .portfolioBox {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: 3px solid #AAA;
-    column-gap: 5px;
-    background-color: #AAA;
     font-weight: bold;
     line-height: 2;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-gap: 10px;
 }
-.portfolioTotals {
+.portfolioTotalHeading {
+    border: 3px solid #AAA;
     background-color: #CCC;
-    height: 30px;
+    text-align: center;
+}
+.portfolioTotal {
+    border: 3px solid #AAA;
+    background-color: #EEE;
     text-align: center;
 }
 #graphHeadingContainer {
@@ -181,9 +226,23 @@ body {
 #analysisGraphs {
     width: 1200px;
     height: 850px;
-    background-color: white;
+    background-color: ;
     z-index: -1;
     position: flex;
+    justify-content: space-between;
+}
+.chartContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-around;
+}
+#g1 {
+    padding: 10px;
+    border: 3px solid #AAA;
+}
+#g2 {
+    padding: 10px;
+    border: 3px solid #AAA;
 }
 #g3 {
     padding: 10px;
@@ -198,12 +257,14 @@ body {
     border: 3px solid #AAA;
 }
 .gaugeContainer {
-    display: grid;
-    grid-template-columns: 500px 500px;
-    justify-content: space-evenly;
+    display: flex;
+    grid-template-rows: 500px 500px;
+    justify-content: space-around;
 }
 #highlowbar {
     display: grid;
-    height: 100px;
     justify-content: center;
+}
+#indices {
+    width: 1000px;
 }

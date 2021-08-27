@@ -9,9 +9,10 @@
     <title>Portfolio Analyser</title>
 </head>
 <body>
-    <header id="main-header">
+    <div id="main-h1-style">
         <h1 id="main-h1">Portfolio Analyser</h1>
-    </header>
+    </div>
+    <header id="main-header"></header>
 
     <nav id="nav-bar">
         <h3>Languages & Frameworks</h3>
@@ -33,6 +34,8 @@
         <div id="analysis" class="page"><a href="{{  url_for('analysis')  }}"><li>Stock Analysis</li></a></div>
         <div id="market" class="page"><a href="{{  url_for('market')  }}"><li>Market Update</li></a></div>
     </ul>
-    {% block body %}{% endblock %}
+    <main id="pageBackground">
+        {% block body %}{% endblock %}
+    </main>
 </body>
 </html>
